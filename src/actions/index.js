@@ -2,7 +2,6 @@ const { extractDataFromMessage, downloadImage } = require("../../utils")
 const path = require('path')
 const { TEMP_FOLDER, BOT_EMOJI, PREFIX} = require("../config")
 const {exec} = require('child_process')
-const {t} = require('@ffmpeg') 
 const fs = require('fs') 
 
 class Actions {
