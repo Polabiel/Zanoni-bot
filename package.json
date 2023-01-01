@@ -1,0 +1,19 @@
+{
+  "name": "zanoni-bot",
+  "version": "1.0.0",
+  "description": "Bot de figurinha só que em JavaScript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/index.js",
+    "connection": "node src/connection.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@adiwajshing/baileys": "^5.0.0",
+    "ffmpeg": "0.0.4",
+    "qrcode-terminal": "^0.12.0"
+  }
+}
