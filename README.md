@@ -89,7 +89,7 @@ O F-Droid é uma biblioteca de aplicativos Android, similar a Play Store. A dife
 
 - [Site Oficial do fdroid](fdroid.org)
 
-<a href="https://fdroid.org"><img src="https://content.invisioncic.com/v310067/monthly_2022_07/f-droid.png.9c45eb46593f3eb4276b56b7e5534118.png" alt="O que é F-droid"></a>
+<a href="https://fdroid.org"><img src="https://content.invisioncic.com/v310067/monthly_2022_07/f-droid.png.9c45eb46593f3eb4276b56b7e5534118.png" alt="O que é F-droid" sizes="(max-width: 710px) 120px,(max-width: 991px) 193px,278px"></a>
 
 Como se trata de um aplicativo fora da Play Store, pode ser necessário liberar algumas permissões durante o processo de instalação.
 
@@ -114,11 +114,11 @@ Para instalar o Node.js, digite o comando:
 apt install nodejs
 ```
 
-<a href=""><img src="https://content.invisioncic.com/v310067/monthly_2022_07/apt-nodejs.png.94906a380be23e14fc1f8e13c89820cb.png" alt="Terminal do Termux"></a>
+<a href=""><img src="https://content.invisioncic.com/v310067/monthly_2022_07/apt-nodejs.png.94906a380be23e14fc1f8e13c89820cb.png" alt="Terminal do Termux" sizes="(max-width: 710px) 120px,(max-width: 991px) 193px,278px"></a>
 
 Após a instalação, podemos rodar o Node em nosso dispositivo Android.
 
-<a href=""><img src="https://content.invisioncic.com/v310067/monthly_2022_07/node-running.png.4a758f1bb384e6c748c9ca14af7458ae.png" alt="Terminal do Termux"></a>
+<a href=""><img src="https://content.invisioncic.com/v310067/monthly_2022_07/node-running.png.4a758f1bb384e6c748c9ca14af7458ae.png" alt="Terminal do Termux" sizes="(max-width: 710px) 120px,(max-width: 991px) 193px,278px"></a>
 
 - [Creditos](https://forum.casadodesenvolvedor.com.br/topic/44722-como-emular-um-terminal-linux-e-instalar-o-nodejs-no-android/)
 
