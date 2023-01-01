@@ -89,7 +89,7 @@ O F-Droid é uma biblioteca de aplicativos Android, similar a Play Store. A dife
 
 - [Site Oficial do fdroid](fdroid.org)
 
-<a href="https://fdroid.org"><img src="https://content.invisioncic.com/v310067/monthly_2022_07/f-droid.png.9c45eb46593f3eb4276b56b7e5534118.png" alt="width=300px></a>
+<a href="https://fdroid.org"><img src="https://content.invisioncic.com/v310067/monthly_2022_07/f-droid.png.9c45eb46593f3eb4276b56b7e5534118.png" alt="O que é F-droid" width=300px></a>
 
 Como se trata de um aplicativo fora da Play Store, pode ser necessário liberar algumas permissões durante o processo de instalação.
 
