@@ -13,8 +13,6 @@
   •
   <a href="#installation">Instalação</a>
   •
-  <a href="http://docs.discord.red/en/stable/index.html">Documentation</a>
-  •
   <a href="#plugins">Plugins</a>
   •
   <a href="#comunidade">Comunidade</a>
@@ -31,8 +29,6 @@ novo melhor amigo ou todos juntos!
 
 [Instalação](#Instalação) é fácil, e você **NÃO** precisa saber nada sobre codificação! Aparte
 desde a instalação e atualização, todas as partes do bot podem ser controladas no Whatsapp.
-
-**The default set of modules includes and is not limited to:**
 
 - Recursos de moderação (kick/ban/softban/hackban, mod-log, filtro, limpeza de chat)
 - Curiosidades (as listas estão incluídas e podem ser facilmente adicionadas)
@@ -64,7 +60,7 @@ Se depois de ler o guia você ainda tiver problemas, sinta-se à vontade para se
 O Zanoni-bot é totalmente modular, permitindo carregar e descarregar plugins de sua escolha e instalar plugins de terceiros
 plugins diretamente do Whatsapp! Alguns exemplos são:
 
-- Integração Cleverbot (fale com Red e ela responde)
+- Integração Cleverbot (fale com Zanoni e ele responde)
 - Banir sincronização
 - Mensagens de boas-vindas
 - Cassino

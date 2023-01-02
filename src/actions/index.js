@@ -1,17 +1,18 @@
-const { extractDataFromMessage, downloadImage } = require("../../utils")
+const { extractDataFromMessage, downloadImage,downloadSticker } = require("../../utils")
 const path = require('path')
-const { TEMP_FOLDER, BOT_EMOJI, PREFIX} = require("../config")
-const {exec} = require('child_process')
+const { TEMP_FOLDER, BOT_EMOJI } = require("../config")
+const { exec } = require('child_process')
 const fs = require('fs') 
 
-class Actions {
+class Action {
 
     constructor(bot, baileysMessage) {
-        const {remoteJid,args,isImage} =  extractDataFromMessage(baileysMessage)
+        const { remoteJid, args ,isImage,isSticker } =  extractDataFromMessage(baileysMessage)
 
         this.bot = bot
         this.remoteJid = remoteJid
         this.args = args
+        this.isSticker = isSticker
         this.isImage = isImage
         this.baileysMessage = baileysMessage
     }
@@ -40,7 +41,27 @@ class Actions {
 
         })
     }
-    
+   async toImage() {
+    if (!this.isSticker) {
+        await this.bot.sendMessage(this.remoteJid, {text: `${BOT_EMOJI} ❌ Erro! Você precisa enviar uma figurinha!`})
+        return
+    }
+    const inputPath  = await downloadSticker(this.baileysMessage,'input')
+    const outputPath = path.resolve(TEMP_FOLDER, 'output.png')
+
+    exec(`ffmpeg -i ${inputPath} ${outputPath}`, async (error) => {
+        if (error) {
+            await this.bot.sendMessage(this.remoteJid, {text:`${BOT_EMOJI}❌ Erro ao converter a figurinha para uma imagem 😢`})
+            return
+        }
+        await this.bot.sendMessage(this.remoteJid, {
+            sticker: {url: outputPath}
+        })
+
+        fs.unlinkSync(inputPath)
+        fs.unlinkSync(outputPath)
+    })
+    }
 }
 
-module.exports = {Actions}
+module.exports = {Action}
