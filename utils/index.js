@@ -1,14 +1,16 @@
 const {PREFIX, TEMP_FOLDER} = require('../src/config')
 const {downloadContentFromMessage} = require('@adiwajshing/baileys')
 const path = require('path')
-const {writeFile} = require('fs/promises')
+const {writeFile} = require('fs/promises');
+const video = require('ffmpeg/lib/video');
 
 function extractDataFromMessage(baileysMessage){
     const textMessage = baileysMessage.message?.conversation;
     const extendedTextMessage = baileysMessage.message?.extendedTextMessage?.text;
     const imageTextMessage =  baileysMessage.message?.imageMessage?.caption;
+    const videoTextMessage = baileysMessage.message?.videoMessage?.caption;
 
-    const fullMessage = textMessage || extendedTextMessage || imageTextMessage
+    const fullMessage = textMessage || extendedTextMessage || imageTextMessage || videoTextMessage 
 
     if (!fullMessage){
         return {
@@ -17,15 +19,16 @@ function extractDataFromMessage(baileysMessage){
             command:'',
             args:'',
             isImage: false,
-            isSticker: false
+            isSticker: false,
+            isVideo:false,
         }
     }
 
-    const isImage = is(baileysMessage,'image')
+    const isImage = is(baileysMessage,'image');
+    const isVideo = is(baileysMessage, 'video');
+    const isSticker = is(baileysMessage,'sticker');
 
-    const isSticker = is(baileysMessage,'sticker')
-
-    const [command, ...args] = fullMessage.trim().split(' ')
+    const [command, ...args] = fullMessage.trim().split(' ');
     
     const arg = args.reduce((acc,arg) => acc + ' ' + arg, '').trim();
 
@@ -35,6 +38,7 @@ function extractDataFromMessage(baileysMessage){
         command: command.replace(PREFIX, '').trim(),
         args: arg.trim(),
         isImage,
+        isVideo,
         isSticker
     }
 }
@@ -55,14 +59,14 @@ function isCommand(baileysMessage) {
     return fullMessage && fullMessage.startsWith(PREFIX)
 }
 
-async function downloadImage(baileysMessage, fileName) {
+async function download(baileysMessage,fileName,context,extension) {
     const content = getContent(baileysMessage,'image')
 
     if (!content) {
         return null
     }
 
-    const stream = await downloadContentFromMessage(content, 'image')
+    const stream = await downloadContentFromMessage(content, 'context')
 
     let buffer = Buffer.from([])
 
@@ -70,7 +74,7 @@ async function downloadImage(baileysMessage, fileName) {
         buffer = Buffer.concat([buffer,chuck])
     }
 
-    const filePath = path.resolve(TEMP_FOLDER, `${fileName}.png`)
+    const filePath = path.resolve(TEMP_FOLDER, `${fileName}.${extension}`)
 
     await writeFile(filePath, buffer)
 
@@ -78,37 +82,20 @@ async function downloadImage(baileysMessage, fileName) {
 
 }
 
-function isCommand(baileysMessage) {
-    const { fullMessage } = extractDataFromMessage(baileysMessage)
-
-    return fullMessage && fullMessage.startsWith(PREFIX)
+async function downloadImage(baileysMessage, fileName) {
+    return await download(baileysMessage,fileName,'image','png');
 }
 
 async function downloadSticker(baileysMessage, fileName) {
-    const content = getContent(baileysMessage,'sticker')
-
-    if (!content) {
-        return null
-    }
-
-    const stream = await downloadContentFromMessage(content, 'sticker')
-
-    let buffer = Buffer.from([])
-
-    for await (const chuck of stream) {
-        buffer = Buffer.concat([buffer,chuck])
-    }
-
-    const filePath = path.resolve(TEMP_FOLDER, `${fileName}.webp`)
-
-    await writeFile(filePath, buffer)
-
-    return filePath
-
+    return await download(baileysMessage,fileName,'sticker','webp');
 }
 
+async function downloadVideo(baileysMessage, fileName) {
+    return await download(baileysMessage,fileName,'video','mp4');
+}
 module.exports = {
     downloadImage,
+    downloadVideo,
     downloadSticker,
     extractDataFromMessage,
     isCommand       
