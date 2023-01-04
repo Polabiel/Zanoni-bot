@@ -15,6 +15,12 @@ async function middlewares(bot) {
     const { command, remoteJid } = extractDataFromMessage(baileysMessage);
 
     switch (command.toLowerCase()) {
+      case "menu":
+      case "/":
+      case "?":
+      case "help":
+        await action.menu();
+        break;
       case "cep":
         await action.cep();
         break;
@@ -31,6 +37,9 @@ async function middlewares(bot) {
       case "toimg":
         await action.toImage();
         break;
+      default:
+        await bot.sendMessage(remoteJid, { text: `${BOT_EMOJI} Esse comando não existe!\nAcesse o */MENU* e use meus comandos` })
+        break
     }
   });
 }

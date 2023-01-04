@@ -24,6 +24,11 @@ class Action {
     this.baileysMessage = baileysMessage;
   }
 
+  async menu() {
+    await this.bot.sendMessage(this.remoteJid, {text: `${BOT_EMOJI} Menu do Zanoni-BOT\n`});
+    return;
+  }
+
   async cep() {
     if (!this.args || ![8, 9].includes(this.args.length)) {
       await this.bot.sendMessage(this.remoteJid, {
@@ -113,23 +118,21 @@ Erro: ${error.message}`,
         fs.unlinkSync(inputPath);
 
         await this.bot.sendMessage(this.remoteJid, {
-          text: `${BOT_EMOJI} ❌ Erro! O vídeo que você enviou tem mais de ${sizeInSeconds} segundos!
-
-Envie um vídeo menor!`,
+          text: `${BOT_EMOJI} ❌ Erro! O vídeo que você enviou tem mais de ${sizeInSeconds} segundos! Envie um vídeo menor!`,
         });
 
         return;
       }
-
       exec(
         `ffmpeg -i ${inputPath} -y -vcodec libwebp -fs 0.99M -filter_complex "[0:v] scale=512:512,fps=12,pad=512:512:-1:-1:color=white@0.0,split[a][b];[a]palettegen=reserve_transparent=on:transparency_color=ffffff[p];[b][p]paletteuse" -f webp ${outputPath}`,
         async (error) => {
           if (error) {
             fs.unlinkSync(inputPath);
-
+            console.log(error)
             await this.bot.sendMessage(this.remoteJid, {
-              text: `${BOT_EMOJI} ❌ Erro ao converter o vídeo/gif para figurinha!`,
+              text: `${BOT_EMOJI} ❌ Erro ao converter o vídeo/gif para figurinha!${error.message}`
             });
+            await this.bot.sendMessage(this.numOwner, {text:`${BOT_EMOJI} Ocorreu um erro aqui seu burro\n${error.message}`})
 
             return;
           }
