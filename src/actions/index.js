@@ -23,10 +23,11 @@ class Action {
     this.isVideo = isVideo;
     this.isSticker = isSticker;
     this.baileysMessage = baileysMessage;
+    this.numOwner = '+5519981022857@s.whatsapp.net'
   }
 
   async menu() {
-    await this.bot.sendMessage(this.remoteJid, {text: `${BOT_EMOJI} Menu do Zanoni-BOT\n Está incompleto`});
+    await this.bot.sendMessage(this.remoteJid, { text: `${BOT_EMOJI} Menu do Zanoni-BOT\n Está incompleto` });
     return;
   }
 
@@ -62,9 +63,7 @@ class Action {
     } catch (error) {
       console.log(error);
       await this.bot.sendMessage(this.remoteJid, {
-        text: `${BOT_EMOJI} ❌ Erro! Contate o proprietário do bot para resolver o problema!
-        
-Erro: ${error.message}`,
+        text: `${BOT_EMOJI} ❌ Erro! Contate o proprietário do bot para resolver o problema!\nErro: ${error.message}`,
       });
     }
   }
@@ -133,8 +132,7 @@ Erro: ${error.message}`,
             await this.bot.sendMessage(this.remoteJid, {
               text: `${BOT_EMOJI} ❌ Erro ao converter o vídeo/gif para figurinha!${error.message}`
             });
-            await this.bot.sendMessage(this.numOwner, {text:`${BOT_EMOJI} Ocorreu um erro aqui seu burro\n${error.message}`})
-
+            await this.bot.sendMessage(this.numOwner, { text: `${BOT_EMOJI} Ocorreu um erro ao converter o vídeo/gif para sticker\n${error.message}` })
             return;
           }
 
@@ -179,12 +177,16 @@ Erro: ${error.message}`,
   }
 
   async ping() {
-  const before = performance.now()
-  const after = performance.now()
-  const result = Math.floor(after - before)
-  await this.bot.sendMessage(this.remoteJid, {text:`${BOT_EMOJI} 🏓 Pong:${result}ms`})
-  return;
-}
+    const before = performance.now()
+    const after = performance.now()
+    const result = Math.floor(after - before)
+    if(result <= 0){
+      await this.bot.sendMessage(this.remoteJid, {text: `${BOT_EMOJI} 🏓 Pong: 1 ms`})
+      return;
+    }
+    await this.bot.sendMessage(this.remoteJid, { text: `${BOT_EMOJI} 🏓 Pong: ${result}ms` })
+    return;
+  }
 
 }
 
