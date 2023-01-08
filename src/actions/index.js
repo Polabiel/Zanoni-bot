@@ -182,7 +182,7 @@ Erro: ${error.message}`,
   const before = performance.now()
   await this.bot.sendMessage(this.remoteJid, {text:`${BOT_EMOJI} Testando o Ping`})
   const after = performance.now()
-  const result = after - before
+  const result = Math.floor(after - before)
   await this.bot.sendMessage(this.remoteJid, {text:`${BOT_EMOJI} Latencia de ${result}ms`})
   return;
 }
