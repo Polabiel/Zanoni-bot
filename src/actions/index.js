@@ -9,6 +9,7 @@ const {
 const path = require("path");
 const { exec } = require("child_process");
 const fs = require("fs");
+const { performance } = require('perf_hooks');
 
 class Action {
   constructor(bot, baileysMessage) {
@@ -176,6 +177,16 @@ Erro: ${error.message}`,
       fs.unlinkSync(outputPath);
     });
   }
+
+  async ping() {
+  const before = performance.now()
+  await this.bot.sendMessage(this.remoteJid, {text:`${BOT_EMOJI} Testando o Ping`}, MessageType.text)
+  const after = performance.now()
+  const result = after - before
+  await this.bot.sendMessage(this.remoteJid, {text:`${BOT_EMOJI} Latencia de ${result}ms`})
+  return
+}
+
 }
 
 module.exports = Action;

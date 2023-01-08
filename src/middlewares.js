@@ -31,7 +31,7 @@ async function middlewares(bot) {
         await action.sticker();
         break;
       case "ping":
-        await bot.sendMessage(remoteJid, { text: `${BOT_EMOJI} Pong!` });
+        await action.ping();
         break;
       case "toimage":
       case "toimg":

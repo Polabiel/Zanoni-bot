@@ -15,6 +15,7 @@
     "@adiwajshing/baileys": "^5.0.0",
     "correios-brasil": "^3.0.3",
     "ffmpeg": "0.0.4",
+    "perf_hooks": "^0.0.1",
     "qrcode-terminal": "^0.12.0"
   }
 }
