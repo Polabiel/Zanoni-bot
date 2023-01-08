@@ -26,7 +26,7 @@ class Action {
   }
 
   async menu() {
-    await this.bot.sendMessage(this.remoteJid, {text: `${BOT_EMOJI} Menu do Zanoni-BOT\n`});
+    await this.bot.sendMessage(this.remoteJid, {text: `${BOT_EMOJI} Menu do Zanoni-BOT\n Está incompleto`});
     return;
   }
 
@@ -180,11 +180,11 @@ Erro: ${error.message}`,
 
   async ping() {
   const before = performance.now()
-  await this.bot.sendMessage(this.remoteJid, {text:`${BOT_EMOJI} Testando o Ping`}, MessageType.text)
+  await this.bot.sendMessage(this.remoteJid, {text:`${BOT_EMOJI} Testando o Ping`})
   const after = performance.now()
   const result = after - before
   await this.bot.sendMessage(this.remoteJid, {text:`${BOT_EMOJI} Latencia de ${result}ms`})
-  return
+  return;
 }
 
 }
