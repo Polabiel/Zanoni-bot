@@ -22,10 +22,10 @@ function menuMessage() {
 
 ╭━━⪩ Comandos ⪨━━
 ▢
-▢ • ${PREFIX}cep
-▢ • ${PREFIX}ping
-▢ • ${PREFIX}sticker
-▢ • ${PREFIX}to-image
+▢ • ${PREFIX}cep - Mostrar a localização com o CEP
+▢ • ${PREFIX}ping - Mostrar latência do servidor
+▢ • ${PREFIX}sticker - Transformar gif/img em figurinha
+▢ • ${PREFIX}toimg - Transformar img em figurinha 
 ▢
 ╰━━─「」─━━`;
 }
