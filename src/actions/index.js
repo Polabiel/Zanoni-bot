@@ -11,6 +11,7 @@ const { exec } = require("child_process");
 const fs = require("fs");
 const { performance } = require('perf_hooks');
 const { errorMessage, warningMessage } = require('../utils/messages')
+const { checkGreen, checkPro, checkRed, checkWarning } = require('../utils/reactionMessage')
 
 class Action {
   constructor(bot, baileysMessage) {
@@ -174,14 +175,17 @@ class Action {
   }
 
   async ping() {
+    checkPro()
     const before = performance.now()
     const after = performance.now()
     const result = Math.floor(after - before)
     if (result <= 0) {
       await this.bot.sendMessage(this.remoteJid, { text: `${BOT_EMOJI} 🏓 Pong: 1 ms` })
+      checkGreen()
       return;
     }
     await this.bot.sendMessage(this.remoteJid, { text: `${BOT_EMOJI} 🏓 Pong: ${result}ms` })
+    checkGreen()
     return;
   }
 

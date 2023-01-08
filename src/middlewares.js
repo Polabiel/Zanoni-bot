@@ -1,7 +1,7 @@
 const { BOT_EMOJI } = require("./config");
 const { isCommand, extractDataFromMessage } = require("./utils");
 const Action = require("./actions");
-const menuMessage = require('./utils/messages')
+const { menuMessage } = require("./utils/messages");
 
 async function middlewares(bot) {
   bot.ev.on("messages.upsert", async ({ messages }) => {
@@ -20,8 +20,9 @@ async function middlewares(bot) {
       case "/":
       case "?":
       case "help":
-        await bot.sendMessage(remoteJid, { text: `${BOT_EMOJI}\n\n${menuMessage()}` });
-        break;
+          await bot.sendMessage(remoteJid, {text: `${menuMessage()}`,
+          });
+          break;
       case "cep":
         await action.cep();
         break;
@@ -35,6 +36,7 @@ async function middlewares(bot) {
         await action.ping();
         break;
       case "toimage":
+      case "to-image":
       case "toimg":
         await action.toImage();
         break;
