@@ -14,7 +14,7 @@ const { errorMessage, warningMessage } = require('../utils/messages')
 
 class Action {
   constructor(bot, baileysMessage) {
-    const { remoteJid, args, isImage, isVideo, isSticker } =
+    const { remoteJid, args, isImage, isVideo, isSticker,idMessage } =
       extractDataFromMessage(baileysMessage);
 
     this.bot = bot;
@@ -24,6 +24,7 @@ class Action {
     this.isVideo = isVideo;
     this.isSticker = isSticker;
     this.baileysMessage = baileysMessage;
+    this.idMessage = idMessage
     this.numOwner = '+5519981022857@s.whatsapp.net'
   }
 

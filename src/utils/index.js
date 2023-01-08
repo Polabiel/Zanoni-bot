@@ -15,6 +15,7 @@ function extractDataFromMessage(baileysMessage) {
   if (!fullMessage) {
     return {
       remoteJid: "",
+      idMessage: "",
       fullMessage: "",
       command: "",
       args: "",
@@ -34,6 +35,7 @@ function extractDataFromMessage(baileysMessage) {
 
   return {
     remoteJid: baileysMessage?.key?.remoteJid,
+    idMessage: baileysMessage?.key?.id,
     fullMessage,
     command: command.replace(PREFIX, "").trim(),
     args: arg.trim(),

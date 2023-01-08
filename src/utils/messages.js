@@ -26,4 +26,4 @@ function menuMessage() {
     `
 }
 
-modules.exports = { errorMessage, warningMessage, menuMessage }
+module.exports = { errorMessage, warningMessage, menuMessage }
