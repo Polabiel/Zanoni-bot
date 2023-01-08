@@ -3,6 +3,7 @@ const {
     DisconnectReason,
     useMultiFileAuthState,
   } = require("@adiwajshing/baileys");
+const p = require('pino');
   
   async function connect() {
     const { state, saveCreds } = await useMultiFileAuthState(
@@ -13,7 +14,7 @@ const {
       printQRInTerminal: true,
       auth: state,
       defaultQueryTimeoutMs: undefined,
-      logger: silent
+      logger: p({ level: 'silent' })
     });
   
     bot.ev.on("connection.update", (update) => {

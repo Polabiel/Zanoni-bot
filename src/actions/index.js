@@ -180,10 +180,9 @@ Erro: ${error.message}`,
 
   async ping() {
   const before = performance.now()
-  await this.bot.sendMessage(this.remoteJid, {text:`${BOT_EMOJI} Testando o Ping`})
   const after = performance.now()
   const result = Math.floor(after - before)
-  await this.bot.sendMessage(this.remoteJid, {text:`${BOT_EMOJI} Latencia de ${result}ms`})
+  await this.bot.sendMessage(this.remoteJid, {text:`${BOT_EMOJI} 🏓 Pong:${result}ms`})
   return;
 }
 
