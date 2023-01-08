@@ -13,7 +13,7 @@ const {
       printQRInTerminal: true,
       auth: state,
       defaultQueryTimeoutMs: undefined,
-      logger: ({ level: 'silent' })
+      logger: silent
     });
   
     bot.ev.on("connection.update", (update) => {
