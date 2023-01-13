@@ -2,20 +2,25 @@ const reactionMessage = {
     text: ["⌛", "✅", "❌", "⚠️"],
 }
 
- function checkGreen() {
-    return bot.sendMessage(this.remoteJid ,reactionMessage.text[1], this.idMessage);
+function checkGreen() {
+    return bot.sendMessage(remoteJid, reactionMessage.text[1], idMessage);
 }
 
-function checkRed() {
-    return this.bot.sendMessage(this.remoteJid ,reactionMessage.text[2], this.idMessage);
+function checkRed(bot) {
+    return bot.sendMessage(remoteJid, reactionMessage.text[2], idMessage);
 }
 
-function checkPro() {
-    return this.bot.sendMessage(this.remoteJid ,reactionMessage.text[0], this.idMessage);
+function checkPro(bot) {
+    return bot.sendMessage(remoteJid, reactionMessage.text[0], idMessage);
 }
 
-function checkWarning() {
-    return this.bot.sendMessage(this.remoteJid ,reactionMessage.text[3], this.idMessage);
+function checkWarning(bot,remoteJid,idMessage) {
+    return bot.sendMessage(remoteJid, reactionMessage.text[3], idMessage);
 }
+
+console.log(checkGreen(),
+    checkPro(),
+    checkRed(),
+    checkWarning())
 
 module.exports = { checkGreen, checkPro, checkRed, checkWarning }

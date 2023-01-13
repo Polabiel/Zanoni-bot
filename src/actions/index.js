@@ -11,7 +11,6 @@ const { exec } = require("child_process");
 const fs = require("fs");
 const { performance } = require('perf_hooks');
 const { errorMessage, warningMessage } = require('../utils/messages')
-const { checkGreen, checkPro, checkRed, checkWarning } = require('../utils/reactionMessage')
 
 class Action {
   constructor(bot, baileysMessage) {
@@ -30,7 +29,34 @@ class Action {
   }
 
   async cep() {
+    const reactionMessagePro = {
+      react: {
+          text: "⌛", // use an empty string to remove the reaction
+          key: this.baileysMessage.key
+      }
+    }
+    const reactionMessageGreen= {
+      react: {
+          text: "✅", // use an empty string to remove the reaction
+          key: this.baileysMessage.key
+      }
+    }
+    const reactionMessageRed= {
+      react: {
+          text: "❌", // use an empty string to remove the reaction
+          key: this.baileysMessage.key
+      }
+    }
+    const reactionMessageWarning= {
+      react: {
+          text: "⚠️", // use an empty string to remove the reaction
+          key: this.baileysMessage.key
+      }
+    }
+// Configuração de Reação bem merda
+    await this.bot.sendMessage(this.remoteJid, reactionMessagePro);
     if (!this.args || ![8, 9].includes(this.args.length)) {
+      await this.bot.sendMessage(this.remoteJid, reactionMessageWarning);
       await this.bot.sendMessage(this.remoteJid, {
         text: errorMessage('Você precisa enviar um CEP no formato xxxxx-xxx ou xxxxxxxx!'),
       });
@@ -41,12 +67,14 @@ class Action {
       const { data } = await consultarCep(this.args);
 
       if (!data.cep) {
+        await this.bot.sendMessage(this.remoteJid, reactionMessageWarning);
         await this.bot.sendMessage(this.remoteJid, {
           text: warningMessage('CEP não encontrado!'),
         });
         return;
       }
 
+      await this.bot.sendMessage(this.remoteJid, reactionMessageGreen);
       await this.bot.sendMessage(this.remoteJid, {
         text: `${BOT_EMOJI} *Resultado*
         
@@ -60,6 +88,7 @@ class Action {
       });
     } catch (error) {
       console.log(error);
+      await this.bot.sendMessage(this.remoteJid, reactionMessageRed);
       await this.bot.sendMessage(this.remoteJid, {
         text: errorMessage("Contate o proprietário do bot para resolver o problema!\nErro: ",`${error.message}`),
       });
@@ -67,7 +96,34 @@ class Action {
   }
 
   async sticker() {
+    const reactionMessagePro = {
+      react: {
+          text: "⌛", // use an empty string to remove the reaction
+          key: this.baileysMessage.key
+      }
+    }
+    const reactionMessageGreen= {
+      react: {
+          text: "✅", // use an empty string to remove the reaction
+          key: this.baileysMessage.key
+      }
+    }
+    const reactionMessageRed= {
+      react: {
+          text: "❌", // use an empty string to remove the reaction
+          key: this.baileysMessage.key
+      }
+    }
+    const reactionMessageWarning= {
+      react: {
+          text: "⚠️", // use an empty string to remove the reaction
+          key: this.baileysMessage.key
+      }
+    }
+// Configuração de Reação bem merda
+    await this.bot.sendMessage(this.remoteJid, reactionMessagePro);
     if (!this.isImage && !this.isVideo) {
+      await this.bot.sendMessage(this.remoteJid, reactionMessageWarning);
       await this.bot.sendMessage(this.remoteJid, {
         text: errorMessage("Você precisa enviar uma imagem ou um vídeo!"),
       });
@@ -85,6 +141,7 @@ class Action {
           if (error) {
             fs.unlinkSync(inputPath);
 
+            await this.bot.sendMessage(this.remoteJid, reactionMessageRed);
             await this.bot.sendMessage(this.remoteJid, {
               text: errorMessage("ao converter a imagem para figurinha!"),
             });
@@ -92,6 +149,7 @@ class Action {
             return;
           }
 
+          await this.bot.sendMessage(this.remoteJid, reactionMessageGreen);
           await this.bot.sendMessage(this.remoteJid, {
             sticker: { url: outputPath },
           });
@@ -115,6 +173,7 @@ class Action {
       if (!haveSecondsRule) {
         fs.unlinkSync(inputPath);
 
+        await this.bot.sendMessage(this.remoteJid, reactionMessageWarning);
         await this.bot.sendMessage(this.remoteJid, {
           text: errorMessage("O vídeo que você enviou tem mais de", `${sizeInSeconds}`, "segundos! Envie um vídeo menor!"),
         });
@@ -127,13 +186,14 @@ class Action {
           if (error) {
             fs.unlinkSync(inputPath);
             console.log(error)
+            await this.bot.sendMessage(this.remoteJid, reactionMessageRed);
             await this.bot.sendMessage(this.remoteJid, {
               text: errorMessage("ao converter o vídeo/gif para figurinha!"`${error.message}`)
             });
-            await this.bot.sendMessage(this.numOwner, { text: errorMessage ("Ocorreu um erro ao converter o vídeo/gif para sticker\n",`${error.message}`) })
             return;
           }
 
+          await this.bot.sendMessage(this.remoteJid, reactionMessageGreen);
           await this.bot.sendMessage(this.remoteJid, {
             sticker: { url: outputPath },
           });
@@ -146,7 +206,34 @@ class Action {
   }
 
   async toImage() {
+    const reactionMessagePro = {
+      react: {
+          text: "⌛", // use an empty string to remove the reaction
+          key: this.baileysMessage.key
+      }
+    }
+    const reactionMessageGreen= {
+      react: {
+          text: "✅", // use an empty string to remove the reaction
+          key: this.baileysMessage.key
+      }
+    }
+    const reactionMessageRed= {
+      react: {
+          text: "❌", // use an empty string to remove the reaction
+          key: this.baileysMessage.key
+      }
+    }
+    const reactionMessageWarning= {
+      react: {
+          text: "⚠️", // use an empty string to remove the reaction
+          key: this.baileysMessage.key
+      }
+    }
+// Configuração de Reação bem merda
+    await this.bot.sendMessage(this.remoteJid, reactionMessagePro);    
     if (!this.isSticker) {
+      await this.bot.sendMessage(this.remoteJid, reactionMessageWarning);
       await this.bot.sendMessage(this.remoteJid, {
         text: errorMessage("Você precisa enviar um sticker!"),
       });
@@ -159,12 +246,14 @@ class Action {
     exec(`ffmpeg -i ${inputPath} ${outputPath}`, async (error) => {
       if (error) {
         console.log(error);
+        await this.bot.sendMessage(this.remoteJid, reactionMessageRed);
         await this.bot.sendMessage(this.remoteJid, {
           text: errorMessage("ao converter o sticker para figurinha!"),
         });
         return;
       }
 
+      await this.bot.sendMessage(this.remoteJid, reactionMessageGreen);
       await this.bot.sendMessage(this.remoteJid, {
         image: { url: outputPath },
       });
@@ -175,17 +264,42 @@ class Action {
   }
 
   async ping() {
-    checkPro()
+    const reactionMessagePro = {
+      react: {
+          text: "⌛", // use an empty string to remove the reaction
+          key: this.baileysMessage.key
+      }
+    }
+    const reactionMessageGreen= {
+      react: {
+          text: "✅", // use an empty string to remove the reaction
+          key: this.baileysMessage.key
+      }
+    }
+    const reactionMessageRed= {
+      react: {
+          text: "❌", // use an empty string to remove the reaction
+          key: this.baileysMessage.key
+      }
+    }
+    const reactionMessageWarning= {
+      react: {
+          text: "⚠️", // use an empty string to remove the reaction
+          key: this.baileysMessage.key
+      }
+    }
+// Configuração de Reação bem merda
+    await this.bot.sendMessage(this.remoteJid, reactionMessagePro)
     const before = performance.now()
     const after = performance.now()
     const result = Math.floor(after - before)
     if (result <= 0) {
       await this.bot.sendMessage(this.remoteJid, { text: `${BOT_EMOJI} 🏓 Pong: 1 ms` })
-      checkGreen()
+      await this.bot.sendMessage(this.remoteJid, reactionMessageGreen, this.idMessage)
       return;
     }
     await this.bot.sendMessage(this.remoteJid, { text: `${BOT_EMOJI} 🏓 Pong: ${result}ms` })
-    checkGreen()
+    await this.bot.sendMessage(this.remoteJid, reactionMessageGreen, this.idMessage)
     return;
   }
 

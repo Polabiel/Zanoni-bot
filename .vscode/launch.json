@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "type": "chrome",
+            "name": "http://C:\\Users\\atacc\\OneDrive\\Documentos\\Repositorios\\Zanoni-bot\\src\\utils\\reactionMessage.js",
+            "request": "launch",
+            "url": "http://C:\\Users\\atacc\\OneDrive\\Documentos\\Repositorios\\Zanoni-bot\\src\\utils\\reactionMessage.js"
+        }
+    ]
+}
