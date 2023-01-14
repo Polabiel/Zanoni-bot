@@ -78,7 +78,7 @@ class Action {
   async cep() {
     await this.bot.sendMessage(this.remoteJid, this.checkPro)
     if (!this.args || ![8, 9].includes(this.args.length)) {
-      await this.bot.sendMessage(this.remoteJid, this.warningMessage)
+      await this.bot.sendMessage(this.remoteJid, this.checkRed)
       await this.bot.sendMessage(this.remoteJid, {
         text: errorMessage(
           "Você precisa enviar um CEP no formato xxxxx-xxx ou xxxxxxxx!"
@@ -98,7 +98,6 @@ class Action {
         return;
       }
 
-      await this.bot.sendMessage(this.remoteJid, this.checkGreen)
       await this.bot.sendMessage(this.remoteJid, {
         text: `${BOT_EMOJI} *Resultado*
         
@@ -110,11 +109,12 @@ class Action {
 *UF*: ${data.uf}
 *IBGE*: ${data.ibge}`,
       });
+      await this.bot.sendMessage(this.remoteJid, this.checkGreen)
     } catch (error) {
-      await this.bot.sendMessage(this.remoteJid, this.checkRed)
       console.log(error);
+      await this.bot.sendMessage(this.remoteJid, this.checkRed)
       await this.bot.sendMessage(this.remoteJid, {
-        text: errorMessage(`Contate o ${this.peido} do bot para resolver o problema!
+        text: errorMessage(`Contate o proprietário do bot para resolver o problema!
         
 Erro: ${error.message}`),
       });
