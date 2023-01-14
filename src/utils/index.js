@@ -47,7 +47,7 @@ function is(baileysMessage, context) {
   return (
     !!baileysMessage.message?.[`${context}Message`] ||
     !!baileysMessage.message?.extendedTextMessage?.contextInfo?.quotedMessage?.[
-      `${context}Message`
+    `${context}Message`
     ]
   );
 }
@@ -56,7 +56,7 @@ function getContent(baileysMessage, type) {
   return (
     baileysMessage.message?.[`${type}Message`] ||
     baileysMessage.message?.extendedTextMessage?.contextInfo?.quotedMessage?.[
-      `${type}Message`
+    `${type}Message`
     ]
   );
 }

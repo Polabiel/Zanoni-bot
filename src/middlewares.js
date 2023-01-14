@@ -2,6 +2,7 @@ const { BOT_EMOJI } = require("./config");
 const { isCommand, extractDataFromMessage } = require("./utils");
 const Action = require("./actions");
 const { menuMessage } = require("./utils/messages");
+const { errorMessage, warningMessage } = require("./utils/messages");
 
 async function middlewares(bot) {
   bot.ev.on("messages.upsert", async ({ messages }) => {
@@ -16,6 +17,13 @@ async function middlewares(bot) {
     const { command, remoteJid } = extractDataFromMessage(baileysMessage);
 
     switch (command.toLowerCase()) {
+      case "ideia":
+        await bot.sendMessage(remoteJid, {
+          text: warningMessage(
+            "Esse comando não foi desenvolvido!"
+          ),
+        })
+        break;
       case "cep":
         await action.cep();
         break;
@@ -38,7 +46,7 @@ async function middlewares(bot) {
         await action.toImage();
         break;
       default:
-        await bot.sendMessage(remoteJid, {text: `${BOT_EMOJI} Esse comando não existe, usa o */MENU*`})
+        await bot.sendMessage(remoteJid, { text: errorMessage('Esse comando não existe, use o */MENU*') })
     }
   });
 }
