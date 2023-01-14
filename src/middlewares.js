@@ -33,8 +33,20 @@ async function middlewares(bot) {
         break;
       case "menu":
         await bot.sendMessage(remoteJid, {
+          react: {
+            text: "⏳",
+            key: baileysMessage.key
+          }
+        })
+        await bot.sendMessage(remoteJid, {
           text: `${menuMessage()}`,
         });
+        await bot.sendMessage(remoteJid, {
+          react: {
+            text: "✅",
+            key: baileysMessage.key
+          }
+        })
         break;
       case "ping":
         await action.ping()
