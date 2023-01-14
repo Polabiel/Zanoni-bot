@@ -91,7 +91,7 @@ class Action {
       const { data } = await consultarCep(this.args);
 
       if (!data.cep) {
-        await this.bot.sendMessage(this.remoteJid, this.warningMessage)
+        await this.bot.sendMessage(this.remoteJid, this.checkWarning)
         await this.bot.sendMessage(this.remoteJid, {
           text: warningMessage("CEP não encontrado!"),
         });
@@ -124,10 +124,10 @@ Erro: ${error.message}`),
   async sticker() {
     await this.bot.sendMessage(this.remoteJid, this.checkPro)
     if (!this.isImage && !this.isVideo) {
-      await this.bot.sendMessage(this.remoteJid, this.warningMessage)
       await this.bot.sendMessage(this.remoteJid, {
         text: errorMessage("Você precisa enviar uma imagem ou um vídeo!"),
       });
+      await this.bot.sendMessage(this.remoteJid, this.checkWarning)
       return;
     }
 
@@ -140,11 +140,11 @@ Erro: ${error.message}`),
         `ffmpeg -i ${inputPath} -vf scale=512:512 ${outputPath}`,
         async (error) => {
           if (error) {
-            await this.bot.sendMessage(this.remoteJid, this.checkRed)
             console.log(error);
 
             fs.unlinkSync(inputPath);
 
+            await this.bot.sendMessage(this.remoteJid, this.checkRed)
             await this.bot.sendMessage(this.remoteJid, {
               text: errorMessage("Não foi possível converter a figurinha!"),
             });
@@ -152,6 +152,7 @@ Erro: ${error.message}`),
             return;
           }
 
+          await this.bot.sendMessage(this.remoteJid, this.checkGreen)
           await this.bot.sendMessage(this.remoteJid, {
             sticker: { url: outputPath },
           });
@@ -175,10 +176,9 @@ Erro: ${error.message}`),
       if (!haveSecondsRule) {
         fs.unlinkSync(inputPath);
 
-        await this.bot.sendMessage(this.remoteJid, this.checkGreen)
+        await this.bot.sendMessage(this.remoteJid, this.checkWarning)
         await this.bot.sendMessage(this.remoteJid, {
           text: errorMessage(`O vídeo que você enviou tem mais de ${sizeInSeconds} segundos!
-
 Envie um vídeo menor!`),
         });
 
