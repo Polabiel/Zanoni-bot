@@ -19,7 +19,6 @@ function menuMessage() {
   │ Data: ${date.toLocaleDateString("pt-br")}
   │ Hora: ${date.toLocaleTimeString("pt-br")}
   │ Prefixo: ${PREFIX}
-  │ Usuário: @${sender.split("@")[0]}
   ╰──────────┐
   ╭──────────┴─┐
   │ COMANDOS/BÁSICOS
