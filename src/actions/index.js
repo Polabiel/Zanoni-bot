@@ -65,10 +65,10 @@ class Action {
 
   async ideia() {
     await this.bot.sendMessage(this.remoteJid, this.checkPro)
-    await this.bot.sendMessage(this.remoteJid, { text: `${BOT_EMOJI} Talvez eu envie pro Pola, ou não 😈` })
     if (this.sentMessage == '/ideia' || this.sentMessage == '/ideia ' ) {
-      return await this.bot.sendMessage(this.remoteJid, {text: `Escreve alguam coisa na frente, talvez ajuda 😉`})
+      return await this.bot.sendMessage(this.remoteJid, {text: `Escreve alguam coisa na frente, talvez ajuda 😉`}), await this.bot.sendMessage(this.remoteJid, this.warningMessage)
     }
+    await this.bot.sendMessage(this.remoteJid, { text: `${BOT_EMOJI} Talvez eu envie pro Pola, ou não 😈` })
     await this.bot.sendMessage(this.peido, { text: `${BOT_EMOJI} ${this.nickName} mandou essa ideia\n\n_${this.sentMessage.replace('/ideia ', '')}_` })
     await this.bot.sendMessage(this.remoteJid, this.checkGreen)
   }
