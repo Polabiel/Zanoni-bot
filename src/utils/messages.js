@@ -13,7 +13,7 @@ function menuMessage() {
 
   return `╭━━⪩ BEM VINDO! ⪨━━
 ▢
-▢ • ${BOT_NAME}
+▢ • Bot em Desenvolvimento ${BOT_NAME}
 ▢ • Data: ${date.toLocaleDateString("pt-br")}
 ▢ • Hora: ${date.toLocaleTimeString("pt-br")}
 ▢ • Prefixo: ${PREFIX}
