@@ -12,8 +12,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@adiwajsw hing/baileys": "^5.0.0",
-    "correios-brasil": "^3.0.3",
+    "@adiwajshing/baileys": "^5.0.0",
+    "correios-brasil": "^3.0.4",
     "express": "^4.18.2",
     "ffmpeg": "0.0.4",
     "perf_hooks": "^0.0.1",
