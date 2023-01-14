@@ -29,8 +29,7 @@ function menuMessage() {
   │▢ • ${PREFIX}toimg — Transforme um sticker em image
   │▢ • ${PREFIX}ideia — Escreva sua ideia de comandos para o @Pola
   │▢ • ${PREFIX}adm — Em desevolvimento
-  ╰──────────┘
-  `;
+  ╰──────────┘`;
 }
   
 module.exports = {
