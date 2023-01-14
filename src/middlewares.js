@@ -16,13 +16,6 @@ async function middlewares(bot) {
     const { command, remoteJid } = extractDataFromMessage(baileysMessage);
 
     switch (command.toLowerCase()) {
-      case "menu":
-      case "/":
-      case "?":
-      case "help":
-          await bot.sendMessage(remoteJid, {text: `${menuMessage()}`,
-          });
-          break;
       case "cep":
         await action.cep();
         break;
@@ -32,17 +25,20 @@ async function middlewares(bot) {
       case "sticker":
         await action.sticker();
         break;
+      case "menu":
+        await bot.sendMessage(remoteJid, {
+          text: `${menuMessage()}`,
+        });
+        break;
       case "ping":
-        await action.ping();
+        await bot.sendMessage(remoteJid, { text: `${BOT_EMOJI} Pong!` });
         break;
       case "toimage":
-      case "to-image":
       case "toimg":
         await action.toImage();
         break;
       default:
-        await bot.sendMessage(remoteJid, { text: `${BOT_EMOJI} Esse comando não existe!\nAcesse o */MENU* e use meus comandos` })
-        break
+        await bot.sendMessage(remoteJid, {text: `${BOT_EMOJI} Esse comando não existe, usa o */MENU*`})
     }
   });
 }

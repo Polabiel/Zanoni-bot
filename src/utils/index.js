@@ -15,7 +15,6 @@ function extractDataFromMessage(baileysMessage) {
   if (!fullMessage) {
     return {
       remoteJid: "",
-      idMessage: "",
       fullMessage: "",
       command: "",
       args: "",
@@ -35,7 +34,6 @@ function extractDataFromMessage(baileysMessage) {
 
   return {
     remoteJid: baileysMessage?.key?.remoteJid,
-    idMessage: baileysMessage?.key?.id,
     fullMessage,
     command: command.replace(PREFIX, "").trim(),
     args: arg.trim(),
@@ -49,7 +47,7 @@ function is(baileysMessage, context) {
   return (
     !!baileysMessage.message?.[`${context}Message`] ||
     !!baileysMessage.message?.extendedTextMessage?.contextInfo?.quotedMessage?.[
-    `${context}Message`
+      `${context}Message`
     ]
   );
 }
@@ -58,7 +56,7 @@ function getContent(baileysMessage, type) {
   return (
     baileysMessage.message?.[`${type}Message`] ||
     baileysMessage.message?.extendedTextMessage?.contextInfo?.quotedMessage?.[
-    `${type}Message`
+      `${type}Message`
     ]
   );
 }

@@ -3,7 +3,7 @@ const {
   DisconnectReason,
   useMultiFileAuthState,
 } = require("@adiwajshing/baileys");
-const p = require('pino');
+const p = require('pino')
 
 async function connect() {
   const { state, saveCreds } = await useMultiFileAuthState(

@@ -9,12 +9,11 @@ const {
 const path = require("path");
 const { exec } = require("child_process");
 const fs = require("fs");
-const { performance } = require('perf_hooks');
-const { errorMessage, warningMessage } = require('../utils/messages')
+const { errorMessage, warningMessage } = require("../utils/messages");
 
 class Action {
   constructor(bot, baileysMessage) {
-    const { remoteJid, args, isImage, isVideo, isSticker,idMessage } =
+    const { remoteJid, args, isImage, isVideo, isSticker } =
       extractDataFromMessage(baileysMessage);
 
     this.bot = bot;
@@ -24,14 +23,14 @@ class Action {
     this.isVideo = isVideo;
     this.isSticker = isSticker;
     this.baileysMessage = baileysMessage;
-    this.idMessage = idMessage
-    this.numOwner = '+5519981022857@s.whatsapp.net'
   }
 
   async cep() {
     if (!this.args || ![8, 9].includes(this.args.length)) {
       await this.bot.sendMessage(this.remoteJid, {
-        text: errorMessage('Você precisa enviar um CEP no formato xxxxx-xxx ou xxxxxxxx!'),
+        text: errorMessage(
+          "Você precisa enviar um CEP no formato xxxxx-xxx ou xxxxxxxx!"
+        ),
       });
       return;
     }
@@ -41,7 +40,7 @@ class Action {
 
       if (!data.cep) {
         await this.bot.sendMessage(this.remoteJid, {
-          text: warningMessage('CEP não encontrado!'),
+          text: warningMessage("CEP não encontrado!"),
         });
         return;
       }
@@ -60,7 +59,9 @@ class Action {
     } catch (error) {
       console.log(error);
       await this.bot.sendMessage(this.remoteJid, {
-        text: errorMessage("Contate o proprietário do bot para resolver o problema!\nErro: ",`${error.message}`),
+        text: errorMessage(`Contate o proprietário do bot para resolver o problema!
+        
+Erro: ${error.message}`),
       });
     }
   }
@@ -82,10 +83,12 @@ class Action {
         `ffmpeg -i ${inputPath} -vf scale=512:512 ${outputPath}`,
         async (error) => {
           if (error) {
+            console.log(error);
+
             fs.unlinkSync(inputPath);
 
             await this.bot.sendMessage(this.remoteJid, {
-              text: errorMessage("ao converter a imagem para figurinha!"),
+              text: errorMessage("Não foi possível converter a figurinha!"),
             });
 
             return;
@@ -115,21 +118,26 @@ class Action {
         fs.unlinkSync(inputPath);
 
         await this.bot.sendMessage(this.remoteJid, {
-          text: errorMessage("O vídeo que você enviou tem mais de", `${sizeInSeconds}`, "segundos! Envie um vídeo menor!"),
+          text: errorMessage(`O vídeo que você enviou tem mais de ${sizeInSeconds} segundos!
+
+Envie um vídeo menor!`),
         });
 
         return;
       }
+
       exec(
         `ffmpeg -i ${inputPath} -y -vcodec libwebp -fs 0.99M -filter_complex "[0:v] scale=512:512,fps=12,pad=512:512:-1:-1:color=white@0.0,split[a][b];[a]palettegen=reserve_transparent=on:transparency_color=ffffff[p];[b][p]paletteuse" -f webp ${outputPath}`,
         async (error) => {
           if (error) {
             fs.unlinkSync(inputPath);
-            console.log(error)
+
             await this.bot.sendMessage(this.remoteJid, {
-              text: errorMessage("ao converter o vídeo/gif para figurinha!"`${error.message}`)
+              text: errorMessage(
+                "Não foi possível converter o vídeo/gif em figurinha!"
+              ),
             });
-            await this.bot.sendMessage(this.numOwner, { text: errorMessage ("Ocorreu um erro ao converter o vídeo/gif para sticker\n",`${error.message}`) })
+
             return;
           }
 
@@ -159,7 +167,9 @@ class Action {
       if (error) {
         console.log(error);
         await this.bot.sendMessage(this.remoteJid, {
-          text: errorMessage("ao converter o sticker para figurinha!"),
+          text: errorMessage(
+            "Não foi possível converter o sticker para figurinha!"
+          ),
         });
         return;
       }
@@ -172,19 +182,6 @@ class Action {
       fs.unlinkSync(outputPath);
     });
   }
-
-  async ping() {
-    const before = performance.now()
-    const after = performance.now()
-    const result = Math.floor(after - before)
-    if (result <= 0) {
-      await this.bot.sendMessage(this.remoteJid, { text: `${BOT_EMOJI} 🏓 Pong: 1 ms` })
-      return;
-    }
-    await this.bot.sendMessage(this.remoteJid, { text: `${BOT_EMOJI} 🏓 Pong: ${result}ms` })
-    return;
-  }
-
 }
 
 module.exports = Action;
