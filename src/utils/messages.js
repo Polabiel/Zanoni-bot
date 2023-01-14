@@ -22,10 +22,11 @@ function menuMessage() {
 
 ╭━━⪩ MENU ⪨━━
 ▢
-▢ • ${PREFIX}cep
-▢ • ${PREFIX}ping
-▢ • ${PREFIX}sticker
-▢ • ${PREFIX}to-image
+▢ • ${PREFIX}cep - Consulte o endereço pelo CEP
+▢ • ${PREFIX}ping -  Vejá o que acontece
+▢ • ${PREFIX}sticker - Faça uma img/gif se tornar um sticker
+▢ • ${PREFIX}toimg - Faça um sticker se tornar uma img 
+▢ • ${PREFIX}ideia - Envia uma ideia de comando para eu fazer no Zanoni-BOT
 ▢
 ╰━━─「🚀」─━━`;
 }

@@ -1,5 +1,3 @@
-// File-system pra ler a package.json
-const fs = require('fs');
 // Variaveis para iniciar o bot
 const connect = require("./connection");
 const middlewares = require("./middlewares");
