@@ -29,6 +29,7 @@ novo melhor amigo ou todos juntos!
 
 [Instalação](#Instalação) é fácil, e você **NÃO** precisa saber nada sobre codificação! Aparte
 desde a instalação e atualização, todas as partes do bot podem ser controladas no Whatsapp.
+Além disso estamos tentando desevolver recurso como:
 
 - Recursos de moderação (kick/ban/softban/hackban, mod-log, filtro, limpeza de chat)
 - Curiosidades (as listas estão incluídas e podem ser facilmente adicionadas)
@@ -58,16 +59,7 @@ Se depois de ler o guia você ainda tiver problemas, sinta-se à vontade para se
 # Plugins
 
 O Zanoni-bot é totalmente modular, permitindo carregar e descarregar plugins de sua escolha e instalar plugins de terceiros
-plugins diretamente do Whatsapp! Alguns exemplos são:
-
-- Integração Cleverbot (fale com Zanoni e ele responde)
-- Banir sincronização
-- Mensagens de boas-vindas
-- Cassino
-- Papéis de reação
-- Modo lento
-- AniList
-- E muito, muito mais!
+plugins diretamente do Whatsapp!
 
 Sinta-se livre para dar uma [espreitadela](https://discord.gg/QVRM3Z3eY9) no nosso suporte dentro do servidor para tirar dúvidas comigo.
 
