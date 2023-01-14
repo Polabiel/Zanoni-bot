@@ -26,7 +26,8 @@ function menuMessage() {
 ▢ • ${PREFIX}ping -  Vejá o que acontece
 ▢ • ${PREFIX}sticker - Faça uma img/gif se tornar um sticker
 ▢ • ${PREFIX}toimg - Faça um sticker se tornar uma img 
-▢ • ${PREFIX}ideia - Envia uma ideia de comando para eu fazer no Zanoni-BOT
+▢ • ${PREFIX}ideia - Envia uma ideia de comando
+▢ • ${PREFIX}jao - NUNCA USE ESSE COMANDO
 ▢
 ╰━━─「🚀」─━━`;
 }
