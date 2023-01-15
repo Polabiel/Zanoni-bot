@@ -10,7 +10,8 @@ const path = require("path");
 const { exec } = require("child_process");
 const fs = require("fs");
 const { errorMessage, warningMessage } = require("../utils/messages");
-const speed = require('performance-now')
+const speed = require('performance-now');
+const { resourceUsage } = require("process");
 
 class Action {
   constructor(bot, baileysMessage) {
@@ -43,10 +44,19 @@ class Action {
       }
     }
 
-    const { remoteJid, args, isImage, isVideo, isSticker, peido, GroupParticipant, nickName, sentMessage } =
+    const checkNerd = {
+      react: {
+        text: "🤓", // use an empty string to remove the reaction
+        key: baileysMessage.key
+      }
+    }
+
+    const { remoteJid, args, isImage, isVideo, isSticker, peido, GroupParticipant, nickName,isGroup, sentMessage} =
       extractDataFromMessage(baileysMessage);
 
     this.sentMessage = sentMessage;
+    this.isGroup = isGroup;
+    this.checkNerd = checkNerd;
     this.GroupParticipant = GroupParticipant;
     this.nickName = nickName;
     this.peido = peido;
@@ -65,13 +75,25 @@ class Action {
 
   async ideia() {
     await this.bot.sendMessage(this.remoteJid, this.checkPro)
-    if (this.sentMessage == '/ideia' || this.sentMessage == '/ideia ' ) {
-      await this.bot.sendMessage(this.remoteJid, {text: `Escreve alguam coisa na frente, talvez ajuda 😉`})
-      await this.bot.sendMessage(this.remoteJid, this.checkRed)
-      return
+    if (!this.args) {
+        await this.bot.sendMessage(this.remoteJid, this.checkNerd)
+        await this.bot.sendMessage(this.remoteJid, {
+          text: errorMessage(
+            "Você precisa escrever sua ideia na frente 🤓"
+          ),
+        });
+        return;
+    } else if (this.isGroup) {
+      await this.bot.sendMessage(this.remoteJid, this.checkWarning)
+        await this.bot.sendMessage(this.remoteJid, {
+          text: errorMessage(
+            "Esse comando não funciona em grupo"
+          ),
+        });
+      return;
     }
     await this.bot.sendMessage(this.remoteJid, { text: `${BOT_EMOJI} Talvez eu envie pro Pola, ou não 😈` })
-    await this.bot.sendMessage(this.peido, { text: `${BOT_EMOJI} ${this.nickName} mandou essa ideia\n\n_${this.sentMessage.replace('/ideia ', '')}_` })
+    await this.bot.sendMessage(this.peido, { text: `${BOT_EMOJI} ${this.nickName} mandou essa ideia\n\n_${this.sentMessage.replace('/ideia ','')}_` })
     await this.bot.sendMessage(this.remoteJid, this.checkGreen)
   }
 

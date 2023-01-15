@@ -14,7 +14,9 @@ function extractDataFromMessage(baileysMessage) {
 
   if (!fullMessage) {
     return {
+      sender: "",
       sentMessage: "",
+      isGroup: "",
       peido: "",
       nickName: "",
       idMessage: "",
@@ -38,9 +40,11 @@ function extractDataFromMessage(baileysMessage) {
   const arg = args.reduce((acc, arg) => acc + " " + arg, "").trim();
 
   return {
-    sentMessage: baileysMessage?.message?.extendedTextMessage?.text,
+    sender: baileysMessage?.key?.remoteJid?.endsWith('@g.us') ? baileysMessage?.participant : baileysMessage?.key?.remoteJid,
+    sentMessage: baileysMessage?.key?.remoteJid?.endsWith('@g.us') ? baileysMessage?.message?.conversation : baileysMessage?.message?.extendedTextMessage?.text,
     nickName:baileysMessage?.pushName,
     remoteJid: baileysMessage?.key?.remoteJid,
+    isGroup: baileysMessage?.key?.remoteJid?.endsWith('@g.us'),
     GroupParticipant: baileysMessage?.key?.participant,
     peido: '5519981022857@s.whatsapp.net',
     idMessage: baileysMessage?.key?.id,
