@@ -16,7 +16,6 @@ function menuMessage() {
 ▢ • Bot em Desenvolvimento ${BOT_NAME} 💀
 ▢ • Data: ${date.toLocaleDateString("pt-br")}
 ▢ • Hora: ${date.toLocaleTimeString("pt-br")}
-▢ • ${PREFIX}server - Entre no nosso server do discord
 ▢ • Prefixo: ${PREFIX}
 ▢
 ╰━━─「🪐」─━━
@@ -29,6 +28,7 @@ function menuMessage() {
 ▢ • ${PREFIX}toimg - Faça um sticker se tornar uma img 
 ▢ • ${PREFIX}ideia - Envia uma ideia de comando
 ▢ • ${PREFIX}jao - NUNCA USE ESSE COMANDO
+▢ • ${PREFIX}server - Entre no nosso server do discord
 ▢
 ╰━━─「🚀」─━━`;
 }
