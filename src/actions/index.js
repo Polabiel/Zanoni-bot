@@ -12,7 +12,7 @@ const { exec } = require("child_process");
 const fs = require("fs");
 const { errorMessage, warningMessage } = require("../utils/messages");
 const speed = require('performance-now');
-const { resourceUsage } = require("process");
+const { menuMessage } = require("../utils/messages");
 
 class Action {
   constructor(bot, baileysMessage) {
@@ -52,7 +52,7 @@ class Action {
       }
     }
 
-    const { remoteJid, args, isImage, isVideo, isSticker, peido, GroupParticipant, nickName,isGroup, sentMessage, sentText} =
+    const { remoteJid, args, isImage, isVideo, isSticker, peido, GroupParticipant, nickName, isGroup, sentMessage, sentText } =
       extractDataFromMessage(baileysMessage);
 
     this.sentMessage = sentMessage;
@@ -78,20 +78,20 @@ class Action {
   async ideia() {
     await this.bot.sendMessage(this.remoteJid, this.checkPro)
     if (!this.args) {
-        await this.bot.sendMessage(this.remoteJid, this.checkNerd)
-        await this.bot.sendMessage(this.remoteJid, {
-          text: errorMessage(
-            "Você precisa escrever sua ideia na frente 🤓"
-          ),
-        });
-        return;
+      await this.bot.sendMessage(this.remoteJid, this.checkNerd)
+      await this.bot.sendMessage(this.remoteJid, {
+        text: errorMessage(
+          "Você precisa escrever sua ideia na frente 🤓"
+        ),
+      });
+      return;
     } else if (this.isGroup) {
       await this.bot.sendMessage(this.remoteJid, this.checkWarning)
-        await this.bot.sendMessage(this.remoteJid, {
-          text: errorMessage(
-            "Esse comando não funciona em grupo"
-          ),
-        });
+      await this.bot.sendMessage(this.remoteJid, {
+        text: errorMessage(
+          "Esse comando não funciona em grupo"
+        ),
+      });
       return;
     }
     await this.bot.sendMessage(this.remoteJid, { text: `${BOT_EMOJI} Talvez eu envie pro Pola, ou não 😈` })
@@ -281,10 +281,39 @@ Envie um vídeo menor!`),
 
   async fatos() {
     await this.bot.sendMessage(this.remoteJid, this.checkPro)
-  const fatos = ['O jhon escolheu *NÃO* ser rico.','A primeira versão do Zanoni BOT ele não era careca','Pode se dizer que todo mundo já se frustou com um -28','Antigamente o nick do Matheus Zanoni era\n*Danone*','A maior baleia já existente no mundo é a mãe do Xed','Normalmente o Gabryel com Y está em uma tabacaria comendo vinagre',`O vencedor da pessoa mais negra do Grupo vai para Douglas`,'Precisamos de mais Boa dia no Grupo','Atualmente a pessoa que mais fala merda e ninguem gosta é o Gabriel','O verdadeiro nome do Manuel Ketchup é João Augusto','Pelo incrivel que pareça o Zanoni-BOT é o Matheus Zanoni','O lucas parece o Shaun Ross','O Jhon já comeu um anão(literalmente)','A pessoa mais pobre do Grupo começa com J e termina com N\ntirem suas conclusão','O melhor amigo da infância do Forever foi Hitler','O marquin é o cara mais crente do grupo','A cada 17 segundos o Lessa mata um carioca com um Glock','Sempre que o Art aparece no grupo ele solta 100 citações do Capitão Bolsonaro contra o Jhon','A pessoa mais azarada de todas é o Jhon por sofrer humilhação pelo Xed','O criador desse bot é mono shaco (decepção ou incrivel?)','Infelizmente o Gabriel foi corno aos 13','O jhon já transou na parede da DP (obs: foi de dia)','Quem bolou acende','A segunda bola é do Dono','Tossiu, passou.','O baseado não é microfone','A pessoa mais provável de ter um filho é\nGabryel com Y','O joão já bateu uma no banheiro do Matheus Zanoni com a porta aberta','Iram fazer 3 anos que o album de música de Lucas e Gabriel não foi concluido','Todos os raps deveria ter a mesma qualidade de Poetas no Topo 2','Infelizmente o Wemerson não gosta de ser zuado','Normalmente o Gabriel acorda as 5 da tarde e dorme as 5 da manhã (em ponto)','A melhor música do ano vai para: Manoel Gomes (Caneta Azul)','Jhon já se despe na cozinha e corre sem roupa pela casa do Zanoni','O Gabryel com Y e João não param de se agarrar quando o Lucas entrava no Quarto do Gabriel','Lucas já antigiu a cabeça do Douglas com um cano de aço, causando uma fratura craniana e sequelas permanentes deixando o Douglas com o olho puxado','Jhon e Lucas já cagaram na piscina do Gabriel enquanto ele jogava Geometry Dash']
-  const getContent = fatos[Math.floor(Math.random() * fatos.length)]
-  this.bot.sendMessage(this.remoteJid, {text:`${BOT_EMOJI} Fato: ${getContent}`})
-  await this.bot.sendMessage(this.remoteJid, this.checkGreen)
+    const fatos = ['O jhon escolheu *NÃO* ser rico.', 'A primeira versão do Zanoni BOT ele não era careca', 'Pode se dizer que todo mundo já se frustou com um -28', 'Antigamente o nick do Matheus Zanoni era\n*Danone*', 'A maior baleia já existente no mundo é a mãe do Xed', 'Normalmente o Gabryel com Y está em uma tabacaria comendo vinagre', `O vencedor da pessoa mais negra do Grupo vai para Douglas`, 'Precisamos de mais Boa dia no Grupo', 'Atualmente a pessoa que mais fala merda e ninguem gosta é o Gabriel', 'O verdadeiro nome do Manuel Ketchup é João Augusto', 'Pelo incrivel que pareça o Zanoni-BOT é o Matheus Zanoni', 'O lucas parece o Shaun Ross', 'O Jhon já comeu um anão(literalmente)', 'A pessoa mais pobre do Grupo começa com J e termina com N\ntirem suas conclusão', 'O melhor amigo da infância do Forever foi Hitler', 'O marquin é o cara mais crente do grupo', 'A cada 17 segundos o Lessa mata um carioca com um Glock', 'Sempre que o Art aparece no grupo ele solta 100 citações do Capitão Bolsonaro contra o Jhon', 'A pessoa mais azarada de todas é o Jhon por sofrer humilhação pelo Xed', 'O criador desse bot é mono shaco (decepção ou incrivel?)', 'Infelizmente o Gabriel foi corno aos 13', 'O jhon já transou na parede da DP (obs: foi de dia)', 'Quem bolou acende', 'A segunda bola é do Dono', 'Tossiu, passou.', 'O baseado não é microfone', 'A pessoa mais provável de ter um filho é\nGabryel com Y', 'O joão já bateu uma no banheiro do Matheus Zanoni com a porta aberta', 'Iram fazer 3 anos que o album de música de Lucas e Gabriel não foi concluido', 'Todos os raps deveria ter a mesma qualidade de Poetas no Topo 2', 'Infelizmente o Wemerson não gosta de ser zuado', 'Normalmente o Gabriel acorda as 5 da tarde e dorme as 5 da manhã (em ponto)', 'A melhor música do ano vai para: Manoel Gomes (Caneta Azul)', 'Jhon já se despe na cozinha e corre sem roupa pela casa do Zanoni', 'O Gabryel com Y e João não param de se agarrar quando o Lucas entrava no Quarto do Gabriel', 'Lucas já antigiu a cabeça do Douglas com um cano de aço, causando uma fratura craniana e sequelas permanentes deixando o Douglas com o olho puxado', 'Jhon e Lucas já cagaram na piscina do Gabriel enquanto ele jogava Geometry Dash']
+    const getContent = fatos[Math.floor(Math.random() * fatos.length)]
+    this.bot.sendMessage(this.remoteJid, { text: `${BOT_EMOJI} Fato: ${getContent}` })
+    await this.bot.sendMessage(this.remoteJid, this.checkGreen)
+  }
+
+  async server() {
+    await this.bot.sendMessage(this.remoteJid, this.checkPro)
+    await this.bot.sendMessage(this.remoteJid, { text: `${BOT_EMOJI} Entra no Servidor do discord do Pola: https://discord.gg/jAYqa89fxW 😰\nE no servidor da Haze no Discord: https://discord.gg/3qgtSr6SrZ 💀` })
+    await this.bot.sendMessage(this.remoteJid, this.checkGreen)
+  }
+
+  async default() {
+    await this.bot.sendMessage(this.remoteJid, this.checkWarning)
+    await this.bot.sendMessage(this.remoteJid, { text: errorMessage('Esse comando não existe, use o */MENU*') })
+  }
+
+  async jao() {
+    await this.bot.sendMessage(
+      remoteJid, 
+      { 
+          video: fs.readFileSync("media/video/jao.mp4"), 
+          caption: "eu avisei",
+          gifPlayback: true
+      }
+  )
+  }
+
+  async menu() {
+    await this.bot.sendMessage(this.remoteJid, this.checkPro)
+    await this.bot.sendMessage(remoteJid, {text: `${menuMessage()}`,});
+    await this.bot.sendMessage(this.remoteJid, this.checkGreen)
+
   }
 
 }
