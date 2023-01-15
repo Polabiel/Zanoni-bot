@@ -1,12 +1,9 @@
-const { BOT_EMOJI } = require("./config");
 const { isCommand, extractDataFromMessage } = require("./utils");
 const Action = require("./actions");
-const { menuMessage } = require("./utils/messages");
 
 async function middlewares(bot) {
   bot.ev.on("messages.upsert", async ({ messages }) => {
     const baileysMessage = messages[0];
-    console.log(baileysMessage);
 
     if (!baileysMessage?.message || !isCommand(baileysMessage)) {
       return;
