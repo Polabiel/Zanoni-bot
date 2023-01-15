@@ -303,7 +303,7 @@ Envie um vídeo menor!`),
       this.remoteJid, 
       { 
           video: fs.readFileSync("media/video/jao.mp4"), 
-          caption: "eu avisei",
+          caption: "eu avisei @5519983578858",
           gifPlayback: true
       }
   )
