@@ -49,7 +49,7 @@ class Action {
     this.sentMessage = sentMessage;
     this.GroupParticipant = GroupParticipant;
     this.nickName = nickName;
-    this.peido = peido;W
+    this.peido = peido;
     this.checkWarning = checkWarning;
     this.checkRed = checkRed;
     this.checkGreen = checkGreen;
