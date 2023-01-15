@@ -300,7 +300,7 @@ Envie um vídeo menor!`),
 
   async jao() {
     await this.bot.sendMessage(
-      remoteJid, 
+      this.remoteJid, 
       { 
           video: fs.readFileSync("media/video/jao.mp4"), 
           caption: "eu avisei",
