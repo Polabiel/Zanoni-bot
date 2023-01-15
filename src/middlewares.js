@@ -68,6 +68,10 @@ async function middlewares(bot) {
           }
       )
         break;
+        case 'fato':
+        case 'fatos':
+          action.fatos()
+          break;
       case "server":
       case "pola":
       case "discord":

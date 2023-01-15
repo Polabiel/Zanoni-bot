@@ -29,7 +29,7 @@ function menuMessage() {
 ▢ • ${PREFIX}ideia - Envia uma ideia de comando
 ▢ • ${PREFIX}jao - NUNCA USE ESSE COMANDO
 ▢ • ${PREFIX}server - Entre no nosso server do discord
-▢
+▢ • ${PREFIX}fato - Fatos que o Zanoni BOT sabe
 ╰━━─「🚀」─━━`;
 }
 

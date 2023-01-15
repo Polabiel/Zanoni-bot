@@ -278,6 +278,12 @@ Envie um vídeo menor!`),
     await this.bot.sendMessage(this.remoteJid, this.checkGreen)
   }
 
+  async fatos() {
+  const fatos = ['O jhon escolheu *NÃO* ser rico.','A primeira versão do Zanoni BOT ele não era careca','Pode se dizer que todo mundo já se frustou com um -28','Antigamente o nick do Matheus Zanoni era\n*Danone*','A maior baleia já existente no mundo é a mãe do Xed','Normalmente o Gabryel com Y está em uma tabacaria comendo vinagre',`O vencedor da pessoa mais negra do Grupo vai para @5519991312964`,'Precisamos de mais Boa dia no Grupo','Atualmente a pessoa que mais fala merda e ninguem gosta é o @5519981022857','O verdadeiro nome do Manuel Ketchup é João Augusto','Pelo incrivel que pareça o Zanoni-BOT é o Matheus Zanoni','O lucas parece o Shaun Ross','O Jhon já comeu um anão(literalmente)','A pessoa mais pobre do Grupo começa com J e termina com N\ntirem suas conclusão']
+  const getContent = fatos[Math.floor(Math.random() * fatos.length)]
+  this.bot.sendMessage(this.remoteJid, {text:`${BOT_EMOJI} Fato : ${getContent}`})
+  }
+
 }
 
 module.exports = Action;
