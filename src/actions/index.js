@@ -311,7 +311,7 @@ Envie um vídeo menor!`),
 
   async menu() {
     await this.bot.sendMessage(this.remoteJid, this.checkPro)
-    await this.bot.sendMessage(remoteJid, {text: `${menuMessage()}`,});
+    await this.bot.sendMessage(this.remoteJid, {text: `${menuMessage()}`,});
     await this.bot.sendMessage(this.remoteJid, this.checkGreen)
 
   }
