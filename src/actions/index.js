@@ -51,7 +51,7 @@ class Action {
       }
     }
 
-    const { remoteJid, args, isImage, isVideo, isSticker, peido, GroupParticipant, nickName,isGroup, sentMessage} =
+    const { remoteJid, args, isImage, isVideo, isSticker, peido, GroupParticipant, nickName,isGroup, sentMessage, sentText} =
       extractDataFromMessage(baileysMessage);
 
     this.sentMessage = sentMessage;
@@ -71,6 +71,7 @@ class Action {
     this.isVideo = isVideo;
     this.isSticker = isSticker;
     this.baileysMessage = baileysMessage;
+    this.sentText = sentText;
   }
 
   async ideia() {
@@ -93,7 +94,7 @@ class Action {
       return;
     }
     await this.bot.sendMessage(this.remoteJid, { text: `${BOT_EMOJI} Talvez eu envie pro Pola, ou não 😈` })
-    await this.bot.sendMessage(this.peido, { text: `${BOT_EMOJI} ${this.nickName} mandou essa ideia\n\n_${this.sentMessage.replace('/ideia ','')}_` })
+    await this.bot.sendMessage(this.peido, { text: `${BOT_EMOJI} ${this.nickName} mandou essa ideia\n\n_${this.sentMessage}${this.sentText}_` })
     await this.bot.sendMessage(this.remoteJid, this.checkGreen)
   }
 
