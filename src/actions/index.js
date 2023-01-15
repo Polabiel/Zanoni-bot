@@ -5,6 +5,7 @@ const {
   downloadImage,
   downloadVideo,
   downloadSticker,
+  getBuffer,
 } = require("../utils");
 const path = require("path");
 const { exec } = require("child_process");
@@ -279,7 +280,7 @@ Envie um vídeo menor!`),
   }
 
   async fatos() {
-  const fatos = ['O jhon escolheu *NÃO* ser rico.','A primeira versão do Zanoni BOT ele não era careca','Pode se dizer que todo mundo já se frustou com um -28','Antigamente o nick do Matheus Zanoni era\n*Danone*','A maior baleia já existente no mundo é a mãe do Xed','Normalmente o Gabryel com Y está em uma tabacaria comendo vinagre',`O vencedor da pessoa mais negra do Grupo vai para @5519991312964`,'Precisamos de mais Boa dia no Grupo','Atualmente a pessoa que mais fala merda e ninguem gosta é o @5519981022857','O verdadeiro nome do Manuel Ketchup é João Augusto','Pelo incrivel que pareça o Zanoni-BOT é o Matheus Zanoni','O lucas parece o Shaun Ross','O Jhon já comeu um anão(literalmente)','A pessoa mais pobre do Grupo começa com J e termina com N\ntirem suas conclusão']
+  const fatos = ['O jhon escolheu *NÃO* ser rico.','A primeira versão do Zanoni BOT ele não era careca','Pode se dizer que todo mundo já se frustou com um -28','Antigamente o nick do Matheus Zanoni era\n*Danone*','A maior baleia já existente no mundo é a mãe do Xed','Normalmente o Gabryel com Y está em uma tabacaria comendo vinagre',`O vencedor da pessoa mais negra do Grupo vai para Douglas`,'Precisamos de mais Boa dia no Grupo','Atualmente a pessoa que mais fala merda e ninguem gosta é o Gabriel','O verdadeiro nome do Manuel Ketchup é João Augusto','Pelo incrivel que pareça o Zanoni-BOT é o Matheus Zanoni','O lucas parece o Shaun Ross','O Jhon já comeu um anão(literalmente)','A pessoa mais pobre do Grupo começa com J e termina com N\ntirem suas conclusão','O melhor amigo da infância do Forever foi Hitler','O marquin é o cara mais crente do grupo','A cada 17 segundos o Lessa mata um carioca com um Glock','Sempre que o Art aparece no grupo ele solta 100 citações do Capitão Bolsonaro contra o Jhon','A pessoa mais azarada de todas é o Jhon por sofrer humilhação pelo Xed','O criador desse bot é mono shaco (decepção ou incrivel?)','Infelizmente o Gabriel foi corno aos 13','O jhon já transou na parade da DP (obs: foi de dia)','Quem bolou acende','A segunda bola é do Dono','Tossiu, passou.','O baseado não é microfone','A pessoa mais provável de ter um filho é\nGabryel com Y','O joão já bateu uma no banheiro do Matheus Zanoni com a porta aberta']
   const getContent = fatos[Math.floor(Math.random() * fatos.length)]
   this.bot.sendMessage(this.remoteJid, {text:`${BOT_EMOJI} Fato : ${getContent}`})
   }
