@@ -68,6 +68,12 @@ async function middlewares(bot) {
           }
       )
         break;
+      case "server":
+      case "pola":
+      case "discord":
+      case "haze":
+        await bot.sendMessage(remoteJid,{text: `${BOT_EMOJI} Entra no Servidor do discord do Pola: https://discord.gg/jAYqa89fxW 😰\nE no servidor da Haze no Discord: https://discord.gg/3qgtSr6SrZ 💀`},{ quoted: baileysMessage})
+        break;
       default:
         await bot.sendMessage(remoteJid, { text: errorMessage('Esse comando não existe, use o */MENU*') })
     }
