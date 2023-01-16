@@ -297,19 +297,25 @@ Envie um vídeo menor!`),
   }
 
   async jao() {
-    await this.bot.sendMessage(
-      this.remoteJid, 
-      { 
-          video: fs.readFileSync("media/video/jao.mp4"), 
-          caption: "eu avisei",
-          gifPlayback: true
-      }
-  )
+    const conteudo = [
+      {
+        video: fs.readFileSync("media/video/jao.mp4"),
+        caption: "eu avisei",
+        gifPlayback: true
+      },
+      {
+        image: fs.readFileSync("media/img/jao.jpeg"),
+        caption: "qual foi parça",
+      }]
+    
+    const getContent = conteudo[Math.floor(Math.random() * conteudo.length)]
+    this.bot.sendMessage(this.remoteJid, getContent)
+
   }
 
   async menu() {
     await this.bot.sendMessage(this.remoteJid, this.checkPro)
-    await this.bot.sendMessage(this.remoteJid, {text: `${menuMessage()}`,});
+    await this.bot.sendMessage(this.remoteJid, { text: `${menuMessage()}`, });
     await this.bot.sendMessage(this.remoteJid, this.checkGreen)
 
   }
