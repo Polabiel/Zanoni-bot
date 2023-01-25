@@ -158,10 +158,10 @@ Erro: ${error.message}`),
 
   async sticker() {
     await this.bot.sendMessage(this.remoteJid, this.checkPro);
-    if (!this.isImage && this.isVideo) {
+    if (!this.isImage && !this.isVideo) {
       await this.bot.sendMessage(this.remoteJid, {
         text: errorMessage(
-          "Você precisa enviar uma imagem! (no momento não funciona videos)"
+          "Você precisa enviar uma imagem ou vídeo!"
         ),
       });
       await this.bot.sendMessage(this.remoteJid, this.checkWarning);
