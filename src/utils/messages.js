@@ -13,7 +13,7 @@ function menuMessage() {
 
   return `╭━━⪩ BEM VINDO! ⪨━━
 ▢
-▢ • ${BOT_NAME}
+▢ • Bot em Desenvolvimento ${BOT_NAME} 💀
 ▢ • Data: ${date.toLocaleDateString("pt-br")}
 ▢ • Hora: ${date.toLocaleTimeString("pt-br")}
 ▢ • Prefixo: ${PREFIX}
@@ -26,7 +26,10 @@ function menuMessage() {
 ▢ • ${PREFIX}ping -  Vejá o que acontece
 ▢ • ${PREFIX}sticker - Faça uma img/gif se tornar um sticker
 ▢ • ${PREFIX}toimg - Faça um sticker se tornar uma img 
-▢ • ${PREFIX}ideia - Envia uma ideia de comando para eu fazer no Zanoni-BOT
+▢ • ${PREFIX}ideia - Envia uma ideia de comando
+▢ • ${PREFIX}jao - NUNCA USE ESSE COMANDO
+▢ • ${PREFIX}server - Entre no nosso server do discord
+▢ • ${PREFIX}fato - Fatos que o Zanoni BOT sabe
 ▢
 ╰━━─「🚀」─━━`;
 }

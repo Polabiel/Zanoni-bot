@@ -10,10 +10,18 @@ function extractDataFromMessage(baileysMessage) {
   const videoTextMessage = baileysMessage.message?.videoMessage?.caption;
 
   const fullMessage =
-    textMessage || extendedTextMessage || imageTextMessage || videoTextMessage;
+    textMessage || extendedTextMessage || imageTextMessage || videoTextMessage ;
 
   if (!fullMessage) {
     return {
+      sender: "",
+      sentMessage: "",
+      sentText: "",
+      isGroup: "",
+      peido: "",
+      nickName: "",
+      idMessage: "",
+      GroupParticipant: "",
       remoteJid: "",
       fullMessage: "",
       command: "",
@@ -33,7 +41,15 @@ function extractDataFromMessage(baileysMessage) {
   const arg = args.reduce((acc, arg) => acc + " " + arg, "").trim();
 
   return {
+    sender: baileysMessage?.key?.remoteJid?.endsWith('@g.us') ? baileysMessage?.participant : baileysMessage?.key?.remoteJid,
+    sentMessage: baileysMessage?.message?.extendedTextMessage?.text,
+    sentText: baileysMessage?.message?.conversation,
+    nickName:baileysMessage?.pushName,
     remoteJid: baileysMessage?.key?.remoteJid,
+    isGroup: baileysMessage?.key?.remoteJid?.endsWith('@g.us'),
+    GroupParticipant: baileysMessage?.key?.participant,
+    peido: '5519981022857@s.whatsapp.net',
+    idMessage: baileysMessage?.key?.id,
     fullMessage,
     command: command.replace(PREFIX, "").trim(),
     args: arg.trim(),
