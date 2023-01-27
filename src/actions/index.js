@@ -10,10 +10,11 @@ const {
 const path = require("path");
 const { exec } = require("child_process");
 const fs = require("fs");
-const { errorMessage, warningMessage } = require("../utils/messages");
+const { errorMessage, warningMessage, menuMessage, doneMessage } = require("../utils/messages");
 const speed = require("performance-now");
-const { menuMessage } = require("../utils/messages");
-const { reduceBinaryNodeToDictionary } = require("@adiwajshing/baileys");
+const SquareCloudAPI = require('@squarecloud/api')
+const atributes = JSON.parse(fs.readFileSync('./assets/settings/keys.json'));
+const api = new SquareCloudAPI(atributes.api);
 
 class Action {
   constructor(bot, baileysMessage) {
@@ -379,6 +380,20 @@ Envie um vídeo menor!`),
     await this.bot.sendMessage(this.remoteJid, this.checkPro);
     await this.bot.sendMessage(this.remoteJid, { text: `${menuMessage()}` });
     await this.bot.sendMessage(this.remoteJid, this.checkGreen);
+  }
+
+  async stop(){
+
+    if (!this.baileysMessage.key.remoteJid == `${atributes.num_owner}@s.whatsapp.net` || !this.baileysMessage.key.remoteJid == `${atributes.num_owner}-${atributes.group_secure}@g.us`) {
+      await this.bot.sendMessage(this.remoteJid,{text:`${errorMessage(`Você não é o dono do bot :)`)}`})
+    }
+
+    const application = await api.getApplication(`${atributes.bot_whatsapp}`)
+
+    application.stop()
+    
+    await this.bot.sendMessage(this.remoteJid,{text:`${doneMessage(`${BOT_NAME} vai parar!`)}`})
+
   }
 }
 
