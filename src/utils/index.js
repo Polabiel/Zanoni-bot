@@ -42,9 +42,9 @@ function extractDataFromMessage(baileysMessage) {
 
   return {
     sender: baileysMessage?.key?.remoteJid?.endsWith('@g.us') ? baileysMessage?.participant : baileysMessage?.key?.remoteJid,
-    sentMessage: baileysMessage?.message?.extendedTextMessage?.text,
-    sentText: baileysMessage?.message?.conversation,
-    nickName:baileysMessage?.pushName,
+    sentMessage: extendedTextMessage,
+    sentText: textMessage,
+    nickName: baileysMessage?.pushName,
     remoteJid: baileysMessage?.key?.remoteJid,
     isGroup: baileysMessage?.key?.remoteJid?.endsWith('@g.us'),
     GroupParticipant: baileysMessage?.key?.participant,

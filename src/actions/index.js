@@ -382,19 +382,6 @@ Envie um vídeo menor!`),
     await this.bot.sendMessage(this.remoteJid, this.checkGreen);
   }
 
-  async stop(){
-
-    if (!this.baileysMessage.key.remoteJid == `${atributes.num_owner}@s.whatsapp.net` || !this.baileysMessage.key.remoteJid == `${atributes.num_owner}-${atributes.group_secure}@g.us`) {
-      await this.bot.sendMessage(this.remoteJid,{text:`${errorMessage(`Você não é o dono do bot :)`)}`})
-    }
-
-    const application = await api.getApplication(`${atributes.bot_whatsapp}`)
-
-    application.stop()
-    
-    await this.bot.sendMessage(this.remoteJid,{text:`${doneMessage(`${BOT_NAME} vai parar!`)}`})
-
-  }
 }
 
 module.exports = Action;
