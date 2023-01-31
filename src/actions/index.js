@@ -1,20 +1,16 @@
-const { BOT_EMOJI, TEMP_FOLDER, BOT_NAME } = require("../config");
+const { BOT_EMOJI, TEMP_FOLDER } = require("../config");
 const { consultarCep } = require("correios-brasil");
 const {
   extractDataFromMessage,
   downloadImage,
   downloadVideo,
   downloadSticker,
-  getBuffer,
 } = require("../utils");
 const path = require("path");
 const { exec } = require("child_process");
 const fs = require("fs");
-const { errorMessage, warningMessage, menuMessage, doneMessage } = require("../utils/messages");
+const { errorMessage, warningMessage, menuMessage } = require("../utils/messages");
 const speed = require("performance-now");
-const SquareCloudAPI = require('@squarecloud/api')
-const atributes = JSON.parse(fs.readFileSync('./assets/settings/keys.json'));
-const api = new SquareCloudAPI(atributes.api);
 
 class Action {
   constructor(bot, baileysMessage) {
