@@ -8,6 +8,10 @@ function warningMessage(message) {
   return `${BOT_EMOJI} ⚠ Atenção! ${message}`;
 }
 
+function doneMessage(message) {
+  return `${BOT_EMOJI} 👍 Está Pronto ${message}`
+}
+
 function menuMessage() {
   const date = new Date();
 
@@ -38,4 +42,5 @@ module.exports = {
   errorMessage,
   menuMessage,
   warningMessage,
+  doneMessage,
 };

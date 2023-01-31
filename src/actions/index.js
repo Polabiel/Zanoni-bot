@@ -1,19 +1,16 @@
-const { BOT_EMOJI, TEMP_FOLDER, BOT_NAME } = require("../config");
+const { BOT_EMOJI, TEMP_FOLDER } = require("../config");
 const { consultarCep } = require("correios-brasil");
 const {
   extractDataFromMessage,
   downloadImage,
   downloadVideo,
   downloadSticker,
-  getBuffer,
 } = require("../utils");
 const path = require("path");
 const { exec } = require("child_process");
 const fs = require("fs");
-const { errorMessage, warningMessage } = require("../utils/messages");
+const { errorMessage, warningMessage, menuMessage } = require("../utils/messages");
 const speed = require("performance-now");
-const { menuMessage } = require("../utils/messages");
-const { reduceBinaryNodeToDictionary } = require("@adiwajshing/baileys");
 
 class Action {
   constructor(bot, baileysMessage) {
@@ -346,7 +343,7 @@ Envie um vídeo menor!`),
   async server() {
     await this.bot.sendMessage(this.remoteJid, this.checkPro);
     await this.bot.sendMessage(this.remoteJid, {
-      text: `${BOT_EMOJI} Entra no Servidor do discord do Pola: https://discord.gg/jAYqa89fxW 😰\nE no servidor da Haze no Discord: https://discord.gg/3qgtSr6SrZ 💀`,
+      text: `${BOT_EMOJI} Entra no Servidor do discord do Pola: https://discord.gg/BgQrmc6TnC 😰\nE no servidor da Haze no Discord: https://discord.gg/3qgtSr6SrZ 💀`,
     });
     await this.bot.sendMessage(this.remoteJid, this.checkGreen);
   }
@@ -380,6 +377,7 @@ Envie um vídeo menor!`),
     await this.bot.sendMessage(this.remoteJid, { text: `${menuMessage()}` });
     await this.bot.sendMessage(this.remoteJid, this.checkGreen);
   }
+
 }
 
 module.exports = Action;

@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "@adiwajshing/baileys": "^5.0.0",
+    "@squarecloud/api": "^2.0.1",
     "correios-brasil": "^3.0.4",
     "performance-now": "^2.1.0",
     "qrcode-terminal": "^0.12.0"
