@@ -52,9 +52,6 @@ async function middlewares(bot) {
       case "haze":
         action.server()
         break;
-      case "stop":
-        action.stop()
-        break;
       default:
         action.default()
         break;

@@ -343,7 +343,7 @@ Envie um vídeo menor!`),
   async server() {
     await this.bot.sendMessage(this.remoteJid, this.checkPro);
     await this.bot.sendMessage(this.remoteJid, {
-      text: `${BOT_EMOJI} Entra no Servidor do discord do Pola: https://discord.gg/jAYqa89fxW 😰\nE no servidor da Haze no Discord: https://discord.gg/3qgtSr6SrZ 💀`,
+      text: `${BOT_EMOJI} Entra no Servidor do discord do Pola: https://discord.gg/BgQrmc6TnC 😰\nE no servidor da Haze no Discord: https://discord.gg/3qgtSr6SrZ 💀`,
     });
     await this.bot.sendMessage(this.remoteJid, this.checkGreen);
   }
