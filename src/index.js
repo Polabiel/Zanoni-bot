@@ -3,7 +3,7 @@ const connect = require("./connection");
 const middlewares = require("./middlewares");
 const { BOT_NAME, BOT_EMOJI } = require("./config");
 
-// Variaveis de SquareCloud
+/* // Variaveis de SquareCloud
 const fs = require("fs");
 const SquareCloudAPI = require("@squarecloud/api");
 const atributes = JSON.parse(fs.readFileSync("./assets/settings/keys.json"));
@@ -32,7 +32,7 @@ function SquareRestart() {
     INTERVAL / 60000,
     "minutos."
   );
-}
+} */
 
 async function start() {
   try {
@@ -62,4 +62,4 @@ async function start() {
 
 start();
 console.log('\n');
-SquareRestart();
+/* SquareRestart(); */

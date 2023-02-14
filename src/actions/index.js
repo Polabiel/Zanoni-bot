@@ -9,8 +9,14 @@ const {
 const path = require("path");
 const { exec } = require("child_process");
 const fs = require("fs");
-const { errorMessage, warningMessage, menuMessage } = require("../utils/messages");
+const {
+  errorMessage,
+  warningMessage,
+  menuMessage,
+  consoleError,
+} = require("../utils/messages");
 const speed = require("performance-now");
+const { PassThrough } = require("stream");
 
 class Action {
   constructor(bot, baileysMessage) {
@@ -143,7 +149,10 @@ class Action {
       });
       await this.bot.sendMessage(this.remoteJid, this.checkGreen);
     } catch (error) {
-      console.log(error);
+      console.log(`${consoleError(error)}`);
+      await this.bot.sendMessage(this.remoteJid, {
+        text: `${consoleError(error)}`,
+      });
       await this.bot.sendMessage(this.remoteJid, this.checkRed);
       await this.bot.sendMessage(this.remoteJid, {
         text: errorMessage(`Contate o proprietário do bot para resolver o problema!
@@ -157,9 +166,7 @@ Erro: ${error.message}`),
     await this.bot.sendMessage(this.remoteJid, this.checkPro);
     if (!this.isImage && !this.isVideo) {
       await this.bot.sendMessage(this.remoteJid, {
-        text: errorMessage(
-          "Você precisa enviar uma imagem ou vídeo!"
-        ),
+        text: errorMessage("Você precisa enviar uma imagem ou vídeo!"),
       });
       await this.bot.sendMessage(this.remoteJid, this.checkWarning);
       return;
@@ -212,8 +219,9 @@ Erro: ${error.message}`),
 
         await this.bot.sendMessage(this.remoteJid, this.checkWarning);
         await this.bot.sendMessage(this.remoteJid, {
-          text: errorMessage(`O vídeo que você enviou tem mais de ${sizeInSeconds} segundos!
-Envie um vídeo menor!`),
+          text: errorMessage(
+            `O vídeo que você enviou tem mais de ${sizeInSeconds} segundos! Envie um vídeo menor que ${sizeInSeconds}!`
+          ),
         });
 
         return;
@@ -223,6 +231,7 @@ Envie um vídeo menor!`),
         `ffmpeg -i ${inputPath} -y -vcodec libwebp -fs 0.99M -filter_complex "[0:v] scale=512:512,fps=12,pad=512:512:-1:-1:color=white@0.0,split[a][b];[a]palettegen=reserve_transparent=on:transparency_color=ffffff[p];[b][p]paletteuse" -f webp ${outputPath}`,
         async (error) => {
           if (error) {
+            console.log(`${consoleError(error)}`);
             fs.unlinkSync(inputPath);
 
             await this.bot.sendMessage(this.remoteJid, this.checkRed);
@@ -378,6 +387,54 @@ Envie um vídeo menor!`),
     await this.bot.sendMessage(this.remoteJid, this.checkGreen);
   }
 
+  async chatGPT() {
+    await this.bot.sendMessage(this.remoteJid, this.checkPro);
+    if (!this.args) {
+      await this.bot.sendMessage(this.remoteJid, {
+        text: `${errorMessage(
+          "Você não enviou uma mensagem para usar o comando"
+        )}`,
+      });
+      return;
+    } else {
+      const openai = require("openai");
+
+      // Autentique-se na sua conta OpenAI
+      openai.promise.promisifyAll(openai.default);
+      openai.default.setApiKey(process.env.TOKEN);
+
+      // Defina a sua pergunta
+      const question = `${this.args}`;
+
+      // Defina os parâmetros da API
+      const model_engine = "text-davinci-002";
+      const prompt = `${question}`;
+
+      // Execute a API do OpenAI
+      openai.default
+        .completions({
+          engine: model_engine,
+          prompt: prompt,
+          max_tokens: 1024,
+          n: 1,
+          stop: null,
+          temperature: 0.5,
+        })
+        .then(async (response) => {
+          // Exiba a resposta gerada
+          const answer = response.choices[0].text;
+          await this.bot.sendMessage(this.remoteJid, { text: `${answer}` });
+        })
+        .catch(async (error) => {
+          await this.bot.sendMessage(this.peido, {
+            text: `${consoleError(error)}`,
+          });
+          console.error(consoleError(error));
+        });
+    }
+    await this.bot.sendMessage(this.remoteJid, this.checkGreen);
+    return;
+  }
 }
 
 module.exports = Action;

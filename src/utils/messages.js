@@ -34,8 +34,13 @@ function menuMessage() {
 ▢ • ${PREFIX}jao - NUNCA USE ESSE COMANDO
 ▢ • ${PREFIX}server - Entre no nosso server do discord
 ▢ • ${PREFIX}fato - Fatos que o Zanoni BOT sabe
+▢ • ${PREFIX}gpt - caso tenha algum bug, envie pro dono um msg
 ▢
 ╰━━─「🚀」─━━`;
+}
+
+function consoleError(message) {
+  return `${BOT_EMOJI} ❌ Erro! Não sei o que rolou cara, dá uma olhada\n${message}`
 }
 
 module.exports = {
@@ -43,4 +48,5 @@ module.exports = {
   menuMessage,
   warningMessage,
   doneMessage,
+  consoleError,
 };
