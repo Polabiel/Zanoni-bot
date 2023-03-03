@@ -9,7 +9,11 @@ const {
 const path = require("path");
 const { exec } = require("child_process");
 const fs = require("fs");
-const { errorMessage, warningMessage, menuMessage } = require("../utils/messages");
+const {
+  errorMessage,
+  warningMessage,
+  menuMessage,
+} = require("../utils/messages");
 const speed = require("performance-now");
 
 class Action {
@@ -157,9 +161,7 @@ Erro: ${error.message}`),
     await this.bot.sendMessage(this.remoteJid, this.checkPro);
     if (!this.isImage && !this.isVideo) {
       await this.bot.sendMessage(this.remoteJid, {
-        text: errorMessage(
-          "Você precisa enviar uma imagem ou vídeo!"
-        ),
+        text: errorMessage("Você precisa enviar uma imagem ou vídeo!"),
       });
       await this.bot.sendMessage(this.remoteJid, this.checkWarning);
       return;
@@ -378,12 +380,66 @@ Envie um vídeo menor!`),
     await this.bot.sendMessage(this.remoteJid, this.checkGreen);
   }
 
-  async doa() {
+  async chatGPT() {
+    await this.bot.sendMessage(this.remoteJid, this.checkPro);
+    if (!this.args) {
+      await this.bot.sendMessage(this.remoteJid, {
+        text: `${errorMessage(
+          "Você não enviou uma mensagem para usar o comando"
+        )}`,
+      });
+      return;
+    } else {
+      const openai = require("openai");
+
+      // Autentique-se na sua conta OpenAI
+      openai.promise.promisifyAll(openai.default);
+      openai.default.setApiKey(process.env.TOKEN);
+
+      // Defina a sua pergunta
+      const question = `${this.args}`;
+
+      // Defina os parâmetros da API
+      const model_engine = "text-davinci-002";
+      const prompt = `${question}`;
+
+      // Execute a API do OpenAI
+      openai.default
+        .completions({
+          engine: model_engine,
+          prompt: prompt,
+          max_tokens: 1024,
+          n: 1,
+          stop: null,
+          temperature: 0.5,
+        })
+        .then(async (response) => {
+          // Exiba a resposta gerada
+          const answer = response.choices[0].text;
+          await this.bot.sendMessage(this.remoteJid, { text: `${answer}` });
+        })
+        .catch(async (error) => {
+          await this.bot.sendMessage(this.peido, {
+            text: `${consoleError(error)}`,
+          });
+          console.error(consoleError(error));
+        });
+    }
+    await this.bot.sendMessage(this.remoteJid, this.checkGreen);
+    return;
+  }
+
+  async doe() {
+   if (!this.args) {
+    
+     async doa() {
     await this.bot.sendMessage(this.remoteJid, this.checkPro);
     await this.bot.sendMessage(this.remoteJid, { text: `${doa()}` });
     await this.bot.sendMessage(this.remoteJid, this.checkGreen);
   }
 
+}
+  }
 }
 
 module.exports = Action;

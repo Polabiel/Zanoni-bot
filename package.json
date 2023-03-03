@@ -4,9 +4,10 @@
   "description": "Bot de figurinha só que em JavaScript",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: não expecificado, ou talvez deu certo seu Node.LTS :D\" && exit 1",
+    "test": "node test.js",
     "start": "node src/index.js",
     "connection": "node src/connection.js"
+    
   },
   "keywords": [],
   "author": "",

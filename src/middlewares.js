@@ -15,6 +15,9 @@ async function middlewares(bot) {
     const { command, remoteJid} = extractDataFromMessage(baileysMessage);
 
     switch (command.toLowerCase()) {
+      case "gpt":
+        await action.chatGPT();
+        break
       case "ideia":
         await action.ideia();
         break;
@@ -58,6 +61,11 @@ async function middlewares(bot) {
       case "doe":
         action.doa()
         break
+      case "doe":
+      case "doar":
+      case "doação":
+        action.doe()
+        break;
       default:
         action.default()
         break;

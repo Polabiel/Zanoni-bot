@@ -34,6 +34,7 @@ function menuMessage() {
 ▢ • ${PREFIX}jao - NUNCA USE ESSE COMANDO
 ▢ • ${PREFIX}server - Entre no nosso server do discord
 ▢ • ${PREFIX}fato - Fatos que o Zanoni BOT sabe
+▢ • ${PREFIX}doe - Doe apenas 1 real para o zanoni-bot (necessario 5 reais)
 ▢
 ╰━━─「🚀」─━━`;
 }
