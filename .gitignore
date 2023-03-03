@@ -130,3 +130,7 @@ dist
 
 # Configuração das API
 settings/
+
+# Configuração da autenticação com Whatsapp
+
+baileys/

@@ -31,10 +31,10 @@ function menuMessage() {
 ▢ • ${PREFIX}sticker - Faça uma img/gif se tornar um sticker
 ▢ • ${PREFIX}toimg - Faça um sticker se tornar uma img 
 ▢ • ${PREFIX}ideia - Envia uma ideia de comando
-▢ • ${PREFIX}jao - NUNCA USE ESSE COMANDO
+▢ • ${PREFIX}jao - ${'nunca use esse comando'.toUpperCase}
 ▢ • ${PREFIX}server - Entre no nosso server do discord
-▢ • ${PREFIX}fato - Fatos que o Zanoni BOT sabe
-▢ • ${PREFIX}doe - Doe apenas 1 real para o zanoni-bot (necessario 5 reais)
+▢ • ${PREFIX}fato - Fatos que o ${BOT_NAME} sabe
+▢ • ${PREFIX}doe - Doe apenas 1 real para o ${BOT_NAME} (necessario 5 reais)
 ▢
 ╰━━─「🚀」─━━`;
 }
