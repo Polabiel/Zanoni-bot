@@ -133,4 +133,4 @@ settings/
 
 # Configuração da autenticação com Whatsapp
 
-baileys/
+/assets/auth/baileys
