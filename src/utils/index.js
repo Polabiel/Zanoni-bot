@@ -41,7 +41,7 @@ function extractDataFromMessage(baileysMessage) {
   const arg = args.reduce((acc, arg) => acc + " " + arg, "").trim();
 
   return {
-    sender: baileysMessage?.key?.remoteJid?.endsWith('@g.us') ? baileysMessage?.participant : baileysMessage?.key?.remoteJid,
+    sender: baileysMessage?.key?.remoteJid,
     sentMessage: extendedTextMessage,
     sentText: textMessage,
     nickName: baileysMessage?.pushName,

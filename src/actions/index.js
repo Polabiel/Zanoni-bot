@@ -378,6 +378,12 @@ Envie um vídeo menor!`),
     await this.bot.sendMessage(this.remoteJid, this.checkGreen);
   }
 
+  async doa() {
+    await this.bot.sendMessage(this.remoteJid, this.checkPro);
+    await this.bot.sendMessage(this.remoteJid, { text: `${doa()}` });
+    await this.bot.sendMessage(this.remoteJid, this.checkGreen);
+  }
+
 }
 
 module.exports = Action;

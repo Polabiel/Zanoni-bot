@@ -38,6 +38,10 @@ function menuMessage() {
 ╰━━─「🚀」─━━`;
 }
 
+function menuMessage() {
+  return `${BOT_EMOJI} Doe apenas R$1,00 para o ${BOT_NAME} continuar funcionado :)\nClique no link para a doação: livepix.gg/polabiel\nou use minha chave-pix:17f19897-d99a-4537-8e77-068b3343cc48`;
+}
+
 module.exports = {
   errorMessage,
   menuMessage,

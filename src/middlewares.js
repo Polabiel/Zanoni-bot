@@ -1,4 +1,5 @@
 const { isCommand, extractDataFromMessage } = require("./utils");
+const { sender } = extractDataFromMessage
 const Action = require("./actions");
 
 async function middlewares(bot) {
@@ -52,9 +53,25 @@ async function middlewares(bot) {
       case "haze":
         action.server()
         break;
+      case "doa":
+      case "doação":
+      case "doe":
+        action.doa()
+        break
       default:
         action.default()
         break;
+    }
+  });
+
+  bot.ev.on('message', async (bot) => {
+    const contact = await bot.contacts.get(sender);
+    if (contact.isNewUser) {
+      const userData = {
+        number: sender,
+      };
+      const jsonUserData = JSON.stringify(userData);
+      // Salve o JSON em um arquivo ou envie para algum lugar
     }
   });
 }
