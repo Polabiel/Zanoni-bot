@@ -1,4 +1,4 @@
-const { PREFIX, TEMP_FOLDER } = require("../config");
+const { PREFIX, TEMP_FOLDER,NUMBER_OWNER } = require("../config");
 const { downloadContentFromMessage } = require("@adiwajshing/baileys");
 const path = require("path");
 const { writeFile } = require("fs/promises");
@@ -18,7 +18,7 @@ function extractDataFromMessage(baileysMessage) {
       sentMessage: "",
       sentText: "",
       isGroup: "",
-      peido: "",
+      owner: "",
       nickName: "",
       idMessage: "",
       GroupParticipant: "",
@@ -48,7 +48,7 @@ function extractDataFromMessage(baileysMessage) {
     remoteJid: baileysMessage?.key?.remoteJid,
     isGroup: baileysMessage?.key?.remoteJid?.endsWith('@g.us'),
     GroupParticipant: baileysMessage?.key?.participant,
-    peido: '5519981022857@s.whatsapp.net',
+    owner: `${NUMBER_OWNER}@s.whatsapp.net`,
     idMessage: baileysMessage?.key?.id,
     fullMessage,
     command: command.replace(PREFIX, "").trim(),

@@ -1,4 +1,4 @@
-const { BOT_EMOJI, TEMP_FOLDER } = require("../config");
+const { BOT_EMOJI, TEMP_FOLDER, CONTACTS_PATH } = require("../config");
 const { consultarCep } = require("correios-brasil");
 const {
   extractDataFromMessage,
@@ -59,7 +59,7 @@ class Action {
       isImage,
       isVideo,
       isSticker,
-      peido,
+      owner,
       GroupParticipant,
       nickName,
       isGroup,
@@ -72,7 +72,7 @@ class Action {
     this.checkNerd = checkNerd;
     this.GroupParticipant = GroupParticipant;
     this.nickName = nickName;
-    this.peido = peido;
+    this.owner = owner;
     this.checkWarning = checkWarning;
     this.checkRed = checkRed;
     this.checkGreen = checkGreen;
@@ -105,7 +105,7 @@ class Action {
     await this.bot.sendMessage(this.remoteJid, {
       text: `${BOT_EMOJI} Talvez eu envie pro Pola, ou não 😈`,
     });
-    await this.bot.sendMessage(this.peido, {
+    await this.bot.sendMessage(this.owner, {
       text: `${BOT_EMOJI} ${this.nickName} mandou essa ideia\n\n_${this.sentMessage}${this.sentText}_`,
     });
     await this.bot.sendMessage(this.remoteJid, this.checkGreen);
@@ -379,12 +379,56 @@ Envie um vídeo menor!`),
     await this.bot.sendMessage(this.remoteJid, { text: `${menuMessage()}` });
     await this.bot.sendMessage(this.remoteJid, this.checkGreen);
   }
-  
+
   async doa() {
     await this.bot.sendMessage(this.remoteJid, this.checkPro);
     await this.bot.sendMessage(this.remoteJid, { text: `${doa()}` });
     await this.bot.sendMessage(this.remoteJid, this.checkGreen);
   }
-}
 
+  async createContacts() {
+    // Check if the message is incoming and not sent by the bot
+    if (!this.baileysMessage?.key?.fromMe) {
+      // Get the contact's number and name
+      const number = this.remoteJid;
+      const name = baileysMessage.key.participant ? baileysMessage.key.participant.split('@')[0] : '' || this.nickName;
+
+      // Read the existing contacts from the file, or create an empty array
+      let contacts = [];
+
+      if (fs.existsSync(CONTACTS_PATH)) {
+        const data = fs.readFileSync(CONTACTS_PATH);
+        contacts = JSON.parse(data);
+      }
+
+      // Check if the contact is already in the list, and update or add it accordingly
+      const existingContactIndex = contacts.findIndex(c => c.number === number);
+      if (existingContactIndex !== -1) {
+        contacts[existingContactIndex].name = name;
+      } else {
+        contacts.push({ number, name });
+      }
+
+      // Write the updated list back to the file
+      fs.writeFileSync(CONTACTS_PATH, JSON.stringify(contacts));
+    }
+  }
+
+  async sayAll() {
+
+    const fileContent = fs.readFile(CONTACTS_PATH);
+    const Readcontacts = JSON.parse(fileContent);
+
+    for (const contacts of Readcontacts) {
+      try {
+        if (!this.owner) {
+          return await this.bot.sendMessage(this.remoteJid, { text: `${errorMessage('você não é o dono do bot')}` })
+        } await this.bot.sendMessage(`${contacts.number}`,{text: `mensagem de teste`})
+      } catch (error) {
+        await this.bot.sendMessage(this.owner,{text: `${errorMessage('Não foi possivel enviar mensagem para todos')}`})
+      }
+    }
+    
+  }
+}
 module.exports = Action;

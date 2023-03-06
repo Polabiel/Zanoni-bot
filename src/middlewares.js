@@ -1,10 +1,11 @@
 const { isCommand, extractDataFromMessage } = require("./utils");
-const { sender } = extractDataFromMessage
 const Action = require("./actions");
 
 async function middlewares(bot) {
   bot.ev.on("messages.upsert", async ({ messages }) => {
     const baileysMessage = messages[0];
+
+    action.createContacts();
 
     if (!baileysMessage?.message || !isCommand(baileysMessage)) {
       return;
@@ -12,7 +13,7 @@ async function middlewares(bot) {
 
     const action = new Action(bot, baileysMessage);
 
-    const { command, remoteJid} = extractDataFromMessage(baileysMessage);
+    const { command } = extractDataFromMessage(baileysMessage);
 
     switch (command.toLowerCase()) {
       case "ideia":
@@ -66,17 +67,6 @@ async function middlewares(bot) {
       default:
         action.default()
         break;
-    }
-  });
-
-  bot.ev.on('message', async (bot) => {
-    const contact = await bot.contacts.get(sender);
-    if (contact.isNewUser) {
-      const userData = {
-        number: sender,
-      };
-      const jsonUserData = JSON.stringify(userData);
-      // Salve o JSON em um arquivo ou envie para algum lugar
     }
   });
 }
