@@ -23,24 +23,10 @@
 # Visão Geral
 
 O Zanoni é um bot totalmente modular - o que significa que todos os recursos e comandos podem ser ativados/desativados para o seu
-gostar, tornando-o totalmente personalizável. Este é um *bot auto-hospedado* - o que significa que você precisará
-para hospedar e manter sua própria instância. Você pode transformar o Red em um bot de administrador, bot de música, bot de curiosidades,
-novo melhor amigo ou todos juntos!
+gostar, tornando-o totalmente personalizável.
 
 [Instalação](#Instalação) é fácil, e você **NÃO** precisa saber nada sobre codificação! Aparte
 desde a instalação e atualização, todas as partes do bot podem ser controladas no Whatsapp.
-Além disso estamos tentando desevolver recurso como:
-
-- Recursos de moderação (kick/ban/softban/hackban, mod-log, filtro, limpeza de chat)
-- Curiosidades (as listas estão incluídas e podem ser facilmente adicionadas)
-- Recursos de música (YouTube, SoundCloud, arquivos locais, listas de reprodução, filas)
-- Banco (caça-níqueis, créditos de usuário)
-- Comandos personalizados
-- Pesquisa Imgur/gif
-- Automação administrativa (atribuição de função própria, anúncios entre servidores, relatórios mod-mail)
-- Permissões de comando personalizáveis
-
-**Além disso, outros [plugins](#plugins) podem ser facilmente encontrados e adicionados no Zanoninho.
 
 # Instalação
 
@@ -54,18 +40,11 @@ A instalação requer **node.LTS**
 - [MacOS](https://nodejs.org/pt-br/download/)
 
 Se depois de ler o guia você ainda tiver problemas, sinta-se à vontade para se juntar ao
-[Servidor oficial do Discord](https://discord.gg/QVRM3Z3eY9) e peça ajuda no canal **#Suporte**.
-
-# Plugins
-
-O Zanoni-bot é totalmente modular, permitindo carregar e descarregar plugins de sua escolha e instalar plugins de terceiros
-plugins diretamente do Whatsapp!
-
-Sinta-se livre para dar uma [espreitadela](https://discord.gg/QVRM3Z3eY9) no nosso suporte dentro do servidor para tirar dúvidas comigo.
+[Servidor oficial do Discord](https://discord.gg/BgQrmc6TnC) e peça ajuda no canal **#Suporte**.
 
 # Comunidade
 
-**Zanoni** está em desenvolvimento contínuo e é apoiado por uma comunidade ativa que produz novos conteúdo (funções/plugins) para que todos possam desfrutar. Novos recursos são adicionados constantemente. A gente se encotrar bem [aqui](https://discord.gg/QVRM3Z3eY9) com a comunidade do meu discord
+**Zanoni** está em desenvolvimento contínuo e é apoiado por uma comunidade ativa que produz novos conteúdo (funções/plugins) para que todos possam desfrutar. Novos recursos são adicionados constantemente. A gente se encotrar bem [aqui](https://discord.gg/BgQrmc6TnC) com a comunidade do meu discord
 
 # Termux
 
