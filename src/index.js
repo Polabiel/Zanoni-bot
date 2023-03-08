@@ -20,7 +20,6 @@ function SquareRestart() {
       const application = await api.getApplication(atributes.bot);
       await application.restart();
     } catch (error) {
-      s;
       console.log("Uma exceção foi lançada: ", error);
     }
   }

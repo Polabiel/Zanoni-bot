@@ -1,4 +1,4 @@
-const { PREFIX, TEMP_FOLDER,NUMBER_OWNER } = require("../config");
+const { PREFIX, TEMP_FOLDER,NUMBER_OWNER,NUMBER_BOT } = require("../config");
 const { downloadContentFromMessage } = require("@adiwajshing/baileys");
 const path = require("path");
 const { writeFile } = require("fs/promises");
@@ -26,6 +26,7 @@ function extractDataFromMessage(baileysMessage) {
       fullMessage: "",
       command: "",
       args: "",
+      numberBot: "",
       isImage: false,
       isVideo: false,
       isSticker: false,
@@ -51,6 +52,7 @@ function extractDataFromMessage(baileysMessage) {
     owner: `${NUMBER_OWNER}@s.whatsapp.net`,
     idMessage: baileysMessage?.key?.id,
     fullMessage,
+    numberBot: `${NUMBER_BOT}@s.whatsapp.net`,
     command: command.replace(PREFIX, "").trim(),
     args: arg.trim(),
     isImage,

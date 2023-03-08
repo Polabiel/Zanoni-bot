@@ -17,7 +17,7 @@ function menuMessage() {
 
   return `╭━━⪩ BEM VINDO! ⪨━━
 ▢
-▢ • Bot em Desenvolvimento ${BOT_NAME} 💀
+▢ • Bot em Desenvolvimento ${BOT_NAME} ${BOT_EMOJI}
 ▢ • Data: ${date.toLocaleDateString("pt-br")}
 ▢ • Hora: ${date.toLocaleTimeString("pt-br")}
 ▢ • Prefixo: ${PREFIX}
@@ -39,7 +39,7 @@ function menuMessage() {
 ╰━━─「🚀」─━━`;
 }
 
-function menuMessage() {
+function donationMessage() {
   return `${BOT_EMOJI} Doe apenas R$1,00 para o ${BOT_NAME} continuar funcionado :)\nClique no link para a doação: livepix.gg/polabiel\nou use minha chave-pix:17f19897-d99a-4537-8e77-068b3343cc48`;
 }
 
@@ -48,4 +48,5 @@ module.exports = {
   menuMessage,
   warningMessage,
   doneMessage,
+  donationMessage,
 };

@@ -1,17 +1,17 @@
 const { isCommand, extractDataFromMessage } = require("./utils");
 const Action = require("./actions");
 
+
 async function middlewares(bot) {
   bot.ev.on("messages.upsert", async ({ messages }) => {
     const baileysMessage = messages[0];
+    const action = new Action(bot, baileysMessage);
 
     action.createContacts();
 
     if (!baileysMessage?.message || !isCommand(baileysMessage)) {
       return;
     }
-
-    const action = new Action(bot, baileysMessage);
 
     const { command } = extractDataFromMessage(baileysMessage);
 
