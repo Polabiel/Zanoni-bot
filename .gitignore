@@ -134,3 +134,6 @@ settings/
 # Configuração da autenticação com Whatsapp
 
 /assets/auth/baileys
+
+# Configuração para não aparecer os números no arquivo contacts.json
+/assets/auth/contacts.json

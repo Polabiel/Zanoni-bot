@@ -5,6 +5,9 @@ async function middlewares(bot) {
   bot.ev.on("messages.upsert", async ({ messages }) => {
     const baileysMessage = messages[0];
     const action = new Action(bot, baileysMessage);
+
+    action.presenceAvailable();
+    action.readMessage();
     action.createContacts();
 
     if (!baileysMessage?.message || !isCommand(baileysMessage)) {

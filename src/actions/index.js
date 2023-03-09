@@ -74,6 +74,7 @@ class Action {
       sentText,
       numberBot,
       host,
+      keyMessage,
     } = extractDataFromMessage(baileysMessage);
 
     this.sentMessage = sentMessage;
@@ -96,6 +97,7 @@ class Action {
     this.isSticker = isSticker;
     this.baileysMessage = baileysMessage;
     this.sentText = sentText;
+    this.keyMessage = keyMessage;
   }
 
   async ideia() {
@@ -413,6 +415,21 @@ Envie um vídeo menor!`),
         console.log("Erro ao ler ou salvar arquivo de contatos:", error);
       }
     }
+  }
+
+  async readMessage(){
+
+    const key = {
+      remoteJid: this.remoteJid,
+      id: this.keyMessage,
+      participant: this.GroupParticipant
+    }
+
+    await this.bot.readMessages([key])
+  }
+
+  async presenceAvailable(){
+    await this.bot.sendPresenceUpdate('available')
   }
 
   async sayAll() {

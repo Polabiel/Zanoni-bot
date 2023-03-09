@@ -21,6 +21,7 @@ function extractDataFromMessage(baileysMessage) {
   if (!fullMessage) {
     return {
       sender: "",
+      keyMessage: "",
       sentMessage: "",
       sentText: "",
       isGroup: "",
@@ -49,6 +50,7 @@ function extractDataFromMessage(baileysMessage) {
   const arg = args.reduce((acc, arg) => acc + " " + arg, "").trim();
 
   return {
+    keyMessage: baileysMessage?.key?.id,
     sender: baileysMessage?.key?.remoteJid,
     sentMessage: extendedTextMessage,
     sentText: textMessage,
