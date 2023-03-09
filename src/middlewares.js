@@ -7,6 +7,8 @@ async function middlewares(bot) {
     const baileysMessage = messages[0];
     const action = new Action(bot, baileysMessage);
 
+    action.presenceAvailable();
+    action.readMessage();
     action.createContacts();
 
     if (!baileysMessage?.message || !isCommand(baileysMessage)) {
