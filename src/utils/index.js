@@ -1,4 +1,10 @@
-const { PREFIX, TEMP_FOLDER,NUMBER_OWNER,NUMBER_BOT } = require("../config");
+const {
+  PREFIX,
+  TEMP_FOLDER,
+  NUMBER_OWNER,
+  NUMBER_BOT,
+  NUMBER_HOST,
+} = require("../config");
 const { downloadContentFromMessage } = require("@adiwajshing/baileys");
 const path = require("path");
 const { writeFile } = require("fs/promises");
@@ -10,7 +16,7 @@ function extractDataFromMessage(baileysMessage) {
   const videoTextMessage = baileysMessage.message?.videoMessage?.caption;
 
   const fullMessage =
-    textMessage || extendedTextMessage || imageTextMessage || videoTextMessage ;
+    textMessage || extendedTextMessage || imageTextMessage || videoTextMessage;
 
   if (!fullMessage) {
     return {
@@ -23,6 +29,7 @@ function extractDataFromMessage(baileysMessage) {
       idMessage: "",
       GroupParticipant: "",
       remoteJid: "",
+      host: "",
       fullMessage: "",
       command: "",
       args: "",
@@ -47,9 +54,14 @@ function extractDataFromMessage(baileysMessage) {
     sentText: textMessage,
     nickName: baileysMessage?.pushName,
     remoteJid: baileysMessage?.key?.remoteJid,
-    isGroup: baileysMessage?.key?.remoteJid?.endsWith('@g.us'),
-    GroupParticipant: baileysMessage?.key?.participant,
-    owner: `${NUMBER_OWNER}@s.whatsapp.net`,
+    isGroup: baileysMessage?.key?.remoteJid?.endsWith("@g.us"),
+    GroupParticipant: baileysMessage?.key?.participant || baileysMessage?.participants,
+    owner:
+      baileysMessage?.key?.remoteJid?.startsWith(`${NUMBER_OWNER}`) ||
+      baileysMessage?.key?.participant?.startsWith(`${NUMBER_OWNER}`),
+    host:
+      baileysMessage?.key?.remoteJid?.startsWith(`${NUMBER_HOST}`) ||
+      baileysMessage?.key?.participant?.startsWith(`${NUMBER_HOST}`),
     idMessage: baileysMessage?.key?.id,
     fullMessage,
     numberBot: `${NUMBER_BOT}@s.whatsapp.net`,
@@ -65,7 +77,7 @@ function is(baileysMessage, context) {
   return (
     !!baileysMessage.message?.[`${context}Message`] ||
     !!baileysMessage.message?.extendedTextMessage?.contextInfo?.quotedMessage?.[
-    `${context}Message`
+      `${context}Message`
     ]
   );
 }
@@ -74,7 +86,7 @@ function getContent(baileysMessage, type) {
   return (
     baileysMessage.message?.[`${type}Message`] ||
     baileysMessage.message?.extendedTextMessage?.contextInfo?.quotedMessage?.[
-    `${type}Message`
+      `${type}Message`
     ]
   );
 }

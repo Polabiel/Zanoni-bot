@@ -1,12 +1,10 @@
 const { isCommand, extractDataFromMessage } = require("./utils");
 const Action = require("./actions");
 
-
 async function middlewares(bot) {
   bot.ev.on("messages.upsert", async ({ messages }) => {
     const baileysMessage = messages[0];
     const action = new Action(bot, baileysMessage);
-
     action.createContacts();
 
     if (!baileysMessage?.message || !isCommand(baileysMessage)) {
@@ -32,7 +30,7 @@ async function middlewares(bot) {
         await action.menu();
         break;
       case "ping":
-        await action.ping()
+        await action.ping();
         break;
       case "toimage":
       case "toimg":
@@ -44,28 +42,31 @@ async function middlewares(bot) {
       case "jão":
         await action.jao();
         break;
-        case 'fato':
-        case 'fatos':
-          action.fatos()
-          break;
+      case "fato":
+      case "fatos":
+        action.fatos();
+        break;
       case "server":
       case "pola":
       case "discord":
       case "haze":
-        action.server()
+        action.server();
         break;
       case "doa":
       case "doação":
       case "doe":
-        action.doa()
-        break
+        action.doa();
+        break;
       case "doe":
       case "doar":
       case "doação":
-        action.doe()
+        action.doe();
+        break;
+      case "sayall":
+        action.sayAll();
         break;
       default:
-        action.default()
+        action.default();
         break;
     }
   });
