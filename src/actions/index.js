@@ -543,6 +543,17 @@ Envie um vídeo menor!`),
           console.error("Erro ao enviar mensagem de log:", error);
         }
         break;
+      case "full":
+        const fullLogMessage = JSON.stringify(this.fullMessage, null, 4);
+        try {
+          await this.bot.sendMessage(this.remoteJid, { text: fullLogMessage });
+        } catch (error) {
+          await this.bot.sendMessage(this.remoteJid, {
+            text: `${errorMessage(`Ocorreu um erro: ${error}`)}`,
+          });
+          console.error("Erro ao enviar mensagem de log:", error);
+        }
+        break;
       default:
         await this.bot.sendMessage(this.remoteJid, {
           text: "Comando inválido",
