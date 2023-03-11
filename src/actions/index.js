@@ -20,8 +20,10 @@ const {
   menuMessage,
   donationMessage,
   fatos,
+  adminMessage,
 } = require("../utils/messages");
 const speed = require("performance-now");
+const axios = require("axios");
 
 class Action {
   constructor(bot, baileysMessage) {
@@ -75,9 +77,21 @@ class Action {
       numberBot,
       host,
       keyMessage,
+      command,
+      userId,
+      fromMe,
+      isprivate,
+      textMessage,
+      entendedTextMessage,
     } = extractDataFromMessage(baileysMessage);
 
+    this.textMessage = textMessage;
+    this.extendedTextMessage = entendedTextMessage;
     this.sentMessage = sentMessage;
+    this.isprivate = isprivate;
+    this.fromMe = fromMe;
+    this.userId = userId;
+    this.command = command;
     this.numberBot = numberBot;
     this.isGroup = isGroup;
     this.checkNerd = checkNerd;
@@ -97,7 +111,7 @@ class Action {
     this.isSticker = isSticker;
     this.baileysMessage = baileysMessage;
     this.sentText = sentText;
-    this.keyMessage = keyMessage;
+    this.idMessage = keyMessage;
   }
 
   async ideia() {
@@ -371,97 +385,238 @@ Envie um vídeo menor!`),
   }
 
   async createContacts() {
-    // Verifica se o evento é referente a um contato do WhatsApp
-    if (
-      this.remoteJid.includes("@s.whatsapp.net") &&
-      !this.owner &&
-      !this.numberBot &&
-      this.nickName ==
-        "Gabriel Oliveira" /* essa parte do código é necessario colocar o nome do seu usuario para não dar problema */ &&
-      this.nickName == `${BOT_NAME}`
-    ) {
-      try {
-        // Inicializa a variável contacts com o conteúdo do arquivo de contatos, caso ele exista
-        let contacts = fs.existsSync(CONTACTS_PATH)
-          ? JSON.parse(fs.readFileSync(CONTACTS_PATH, "utf-8"))
-          : [];
-
-        // Verifica se o contato já foi registrado
-        const contactIndex = contacts.findIndex(
-          (c) => c.remoteJid === this.remoteJid
-        );
-        if (contactIndex !== -1) {
-          contacts[contactIndex].nickName =
-            this.nickName || contacts[contactIndex].remoteJid == this.remoteJid;
-        } else {
-          contacts.push({ remoteJid: this.remoteJid, nickName: this.nickName });
-        }
-        // Salva os contatos atualizados no arquivo JSON
-        fs.appendFileSync(CONTACTS_PATH, JSON.stringify(contacts, null, 2), {
-          flag: "w+",
-        });
-        console.log("Contato registrado com sucesso:", {
-          Número: this.remoteJid,
-          "Nome do Contato": this.nickName,
-        });
-      } catch (error) {
-        await this.bot.sendMessage(this.owner, {
-          text: `${errorMessage(
-            "Erro ao ler ou salvar arquivo de contatos:",
-            error
-          )}`,
-        });
-        await this.bot.sendMessage(this.owner, this.checkRed);
-        console.log("Erro ao ler ou salvar arquivo de contatos:", error);
+    if (!this.isprivate || this.fromMe) {
+      return;
+    }
+    try {
+      let contacts = fs.existsSync(CONTACTS_PATH)
+        ? JSON.parse(fs.readFileSync(CONTACTS_PATH, "utf-8"))
+        : [];
+      const contactIndex = contacts.findIndex(
+        (c) => c.remoteJid === this.remoteJid
+      );
+      if (contactIndex !== -1) {
+        contacts[contactIndex].nickName =
+          this.nickName || contacts[contactIndex].remoteJid == this.remoteJid;
+      } else {
+        contacts.push({ remoteJid: this.remoteJid });
       }
+      fs.appendFileSync(CONTACTS_PATH, JSON.stringify(contacts, null, 2), {
+        flag: "w+",
+      });
+      console.log("Contato registrado com sucesso:", {
+        Número: this.remoteJid,
+      });
+    } catch (error) {
+      await this.bot.sendMessage(this.owner, {
+        text: `${errorMessage(
+          "Erro ao ler ou salvar arquivo de contatos:",
+          error
+        )}`,
+      });
+      await this.bot.sendMessage(this.owner, this.checkRed);
+      console.log("Erro ao ler ou salvar arquivo de contatos:", error);
     }
   }
 
-  async readMessage(){
-
+  async readMessage() {
     const key = {
       remoteJid: this.remoteJid,
-      id: this.keyMessage,
-      participant: this.GroupParticipant
-    }
+      id: this.idMessage,
+      participant: this.GroupParticipant,
+    };
 
-    await this.bot.readMessages([key])
+    await this.bot.readMessages([key]);
   }
 
-  async presenceAvailable(){
-    await this.bot.sendPresenceUpdate('available')
+  async presenceAvailable() {
+    await this.bot.sendPresenceUpdate("available");
   }
 
   async sayAll() {
-    // Verificar se this.host e this.owner foram definidos
+    await this.bot.sendMessage(this.remoteJid, this.checkPro);
     if (!this.host || !this.owner) {
+      await this.bot.sendMessage(this.remoteJid, this.checkRed);
       return await this.bot.sendMessage(this.remoteJid, {
         text: `${errorMessage("Você não é o dono/host do bot")}`,
       });
-    }
-
-    // Verificar se this.args foi definido
-    else if (!this.args) {
+    } else if (!this.args) {
+      await this.bot.sendMessage(this.remoteJid, this.checkRed);
       return await this.bot.sendMessage(this.remoteJid, {
         text: `${warningMessage("Você precisa enviar alguma mensagem")}`,
       });
     }
 
-    // Ler os contatos do arquivo JSON e enviar as mensagens
-    const fileContent = fs.readFile(CONTACTS_PATH);
+    const fileContent = fs.readFileSync(CONTACTS_PATH);
+
     const Readcontacts = JSON.parse(fileContent);
 
     for (const contacts of Readcontacts) {
       try {
         await this.bot.sendMessage(`${contacts.remoteJid}`, {
-          text: `${this.args}`,
+          text: `${BOT_EMOJI} Mensagem enviada pelo Desenvolvedor\n\n${this.args}`,
         });
       } catch (error) {
+        await this.bot.sendMessage(this.remoteJid, this.checkRed);
         await this.bot.sendMessage(this.host, {
           text: `${errorMessage(
             "Não foi possivel enviar mensagem para todos"
           )}`,
         });
+      }
+    }
+    await this.bot.sendMessage(this.remoteJid, this.checkGreen);
+  }
+
+  async markAll() {
+    await this.bot.sendMessage(this.remoteJid, this.checkPro);
+    if (!this.owner || !this.host) {
+      await this.bot.sendMessage(this.remoteJid, this.checkRed);
+      return await this.bot.sendMessage(this.remoteJid, {
+        text: adminMessage("Você não é dono do bot/host"),
+      });
+    }
+    if ((this.owner || this.host) && this.isGroup) {
+      const groupMetadata = await this.bot.groupMetadata(this.remoteJid);
+      const mentions = groupMetadata.participants.map((participant) => {
+        return {
+          tag: "@",
+          userId: participant.id.split("@")[0],
+        };
+      });
+      const message = {
+        text: `${BOT_EMOJI} ${this.args}\n\n${mentions.map((m) => m.tag + m.userId).join(" ")}`,
+        mentions: mentions.map((m) => `${m.userId}@s.whatsapp.net`),
+      };
+      await this.bot.sendMessage(this.remoteJid, message);
+    } else {
+      return await this.bot.sendMessage(this.remoteJid, {
+        text: `${errorMessage("Você não é o dono ou não está em um grupo")}`,
+      });
+    }
+    await this.bot.sendMessage(this.remoteJid, this.checkGreen);
+  }
+
+  async log() {
+    await this.bot.sendMessage(this.remoteJid, this.checkPro);
+    if (!this.owner || !this.host) {
+      this.checkNerd;
+      return await this.bot.sendMessage(this.remoteJid, {
+        text: adminMessage("Você não é dono do bot/host"),
+      });
+    }
+    switch (this.args) {
+      case "baileys":
+        const BailesyslogMessage = JSON.stringify(this.baileysMessage, null, 4);
+        try {
+          await this.bot.sendMessage(this.remoteJid, {
+            text: BailesyslogMessage,
+          });
+        } catch (error) {
+          await this.bot.sendMessage(this.remoteJid, {
+            text: `${errorMessage(`Ocorreu um erro: ${error}`)}`,
+          });
+          console.error("Erro ao enviar mensagem de log:", error);
+        }
+        break;
+      case "bot":
+        const botLogMessage = JSON.stringify(this.bot, null, 4);
+        try {
+          await this.bot.sendMessage(this.remoteJid, { text: botLogMessage });
+        } catch (error) {
+          await this.bot.sendMessage(this.remoteJid, {
+            text: `${errorMessage(`Ocorreu um erro: ${error}`)}`,
+          });
+          console.error("Erro ao enviar mensagem de log:", error);
+        }
+        break;
+      case "grupo":
+        const group = JSON.stringify(
+          await this.bot.groupMetadata(this.remoteJid),
+          null,
+          4
+        );
+        try {
+          await this.bot.sendMessage(this.remoteJid, { text: group });
+        } catch (error) {
+          await this.bot.sendMessage(this.remoteJid, {
+            text: `${errorMessage(`Ocorreu um erro: ${error}`)}`,
+          });
+          console.error("Erro ao enviar mensagem de log:", error);
+        }
+        break;
+      default:
+        await this.bot.sendMessage(this.remoteJid, {
+          text: "Comando inválido",
+        });
+        break;
+    }
+    await this.bot.sendMessage(this.remoteJid, this.checkGreen);
+  }
+
+  async blockUser(userCommandCount) {
+    const userId = this.userId;
+
+    // Extrai o comando da mensagem
+    const command = this.command;
+
+    // Define o número máximo de vezes que o usuário pode usar o comando
+    const maxCount = 3;
+
+    // Se o usuário ainda não tiver usado nenhum comando, inicializa a contagem
+    if (!userCommandCount[userId]) {
+      userCommandCount[userId] = {};
+    }
+
+    // Se o usuário já tiver usado o comando, incrementa a contagem
+    if (userCommandCount[userId][command]) {
+      userCommandCount[userId][command]++;
+    } else {
+      userCommandCount[userId][command] = 1;
+    }
+
+    // Se o usuário exceder o número máximo de comandos, bloqueia ou remove do grupo
+    if (userCommandCount[userId][command] > maxCount) {
+      const groupId = this.remoteJid;
+      const response = await this.bot.groupParticipantsUpdate(
+        groupId,
+        [userId],
+        "remove"
+      );
+      if (response.status === 200) {
+        console.log(`Usuário ${userId} removido do grupo ${groupId}.`);
+      } else {
+        console.error(
+          `Erro ao remover usuário ${userId} do grupo ${groupId}. Código: ${response.status}.`
+        );
+      }
+    }
+  }
+
+  async simsimi() {
+    if ((this.textMessage || this.extendedTextMessage) && !this.fromMe) {
+      const message = `${this.args}`;
+      const simsimiUrl = `https://api.simsimi.net/v2/?text=${encodeURIComponent(
+        message
+      )}&lc=pt&cf=false`;
+
+      try {
+        const response = await axios.get(simsimiUrl);
+        const simsimiResponse = response.data;
+        const simsimiMessage =
+          simsimiResponse.success &&
+          simsimiResponse.messages &&
+          simsimiResponse.messages.length > 0
+            ? "Não entendi"
+            : simsimiResponse.success;
+        const messageObject = {
+          text: simsimiMessage,
+          chat: this.remoteJid,
+          quotedMessage: this.baileysMessage.message,
+        };
+        await this.bot.sendMessage(this.remoteJid, messageObject);
+      } catch (error) {
+        console.error("Erro ao enviar mensagem para API do SimSimi: ", error);
       }
     }
   }

@@ -12,6 +12,10 @@ function doneMessage(message) {
   return `${BOT_EMOJI} 👍 Está Pronto ${message}`;
 }
 
+function adminMessage(message) {
+  return `🤡 ${message} 🤡`  
+}
+
 function menuMessage() {
   const date = new Date();
 
@@ -28,7 +32,7 @@ function menuMessage() {
 ▢
 ▢ • ${PREFIX}cep - Consulte o endereço pelo CEP
 ▢ • ${PREFIX}ping -  Vejá o que acontece
-▢ • ${PREFIX}sticker - Faça uma img/gif se tornar um sticker
+▢ • ${PREFIX}sticker - Faça uma img se tornar um sticker (ainda não funciona com vídeos ou gif)
 ▢ • ${PREFIX}toimg - Faça um sticker se tornar uma img 
 ▢ • ${PREFIX}ideia - Envia uma ideia de comando
 ▢ • ${PREFIX}jao - ${"nunca use esse comando".toUpperCase}
@@ -38,6 +42,23 @@ function menuMessage() {
 ▢ • ${PREFIX}doe - Doe apenas 1 real para o ${BOT_NAME} (necessario 5 reais)
 ▢
 ╰━━─「🚀」─━━`;
+}
+
+function adminMenu() {
+  return `╭━━⪩ BEM VINDO! ⪨━━
+  ▢
+  ▢ • Bot em Desenvolvimento ${BOT_NAME} ${BOT_EMOJI}
+  ▢ • Data: ${date.toLocaleDateString("pt-br")}
+  ▢ • Hora: ${date.toLocaleTimeString("pt-br")}
+  ▢ • Prefixo: ${PREFIX}
+  ▢
+  ╰━━─「🪐」─━━
+  
+  ╭━━⪩ MENU ADMINISTRADOR ⪨━━
+  ▢
+  ▢ • ${PREFIX}sayall - Envie mensagem para os usuario do bot (apenas host)
+  ▢ • ${PREFIX}all - Marca todos os usuarios que estão no grupo (apenas host)
+  ▢ • ${PREFIX}log - Usar log de cada função (bot, baileys, grupo) (apenas host)`
 }
 
 function donationMessage() {
@@ -92,4 +113,6 @@ module.exports = {
   doneMessage,
   donationMessage,
   fatos,
+  adminMessage,
+  adminMenu,
 };

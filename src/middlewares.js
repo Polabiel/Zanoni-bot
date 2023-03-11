@@ -13,6 +13,9 @@ async function middlewares(bot) {
     if (!baileysMessage?.message || !isCommand(baileysMessage)) {
       return;
     }
+    
+    const userCommandCount = {};
+    action.blockUser(userCommandCount);
 
     const { command } = extractDataFromMessage(baileysMessage);
 
@@ -66,7 +69,20 @@ async function middlewares(bot) {
         action.doe();
         break;
       case "sayall":
+      case "say":
         action.sayAll();
+        break;
+      case "marca":
+      case "all":
+        action.markAll();
+        break;
+      case "log":
+        action.log();
+        break;
+      case "bot":
+      case "simsimi":
+      case "simi":
+        action.simsimi();
         break;
       default:
         action.default();

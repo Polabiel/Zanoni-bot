@@ -14,12 +14,15 @@ function extractDataFromMessage(baileysMessage) {
   const extendedTextMessage = baileysMessage.message?.extendedTextMessage?.text;
   const imageTextMessage = baileysMessage.message?.imageMessage?.caption;
   const videoTextMessage = baileysMessage.message?.videoMessage?.caption;
+  const audioMessage = baileysMessage.message?.audioMessage?.caption;
 
   const fullMessage =
-    textMessage || extendedTextMessage || imageTextMessage || videoTextMessage;
+    textMessage || extendedTextMessage || imageTextMessage || videoTextMessage || audioMessage;
 
   if (!fullMessage) {
     return {
+      entendedTextMessage: "",
+      textMessage: "",
       sender: "",
       keyMessage: "",
       sentMessage: "",
@@ -35,6 +38,8 @@ function extractDataFromMessage(baileysMessage) {
       command: "",
       args: "",
       numberBot: "",
+      isprivate: "",
+      fromMe: false,
       isImage: false,
       isVideo: false,
       isSticker: false,
@@ -50,6 +55,14 @@ function extractDataFromMessage(baileysMessage) {
   const arg = args.reduce((acc, arg) => acc + " " + arg, "").trim();
 
   return {
+    entendedTextMessage: baileysMessage.message?.extendedTextMessage?.text,
+    textMessage: baileysMessage.message?.conversation,
+    isprivate: baileysMessage?.key?.remoteJid?.includes("@s.whatsapp.net"),
+    fromMe: baileysMessage?.key?.fromMe,
+    userId:
+      baileysMessage?.key?.participant ||
+      baileysMessage?.participants ||
+      baileysMessage?.key?.remoteJid,
     keyMessage: baileysMessage?.key?.id,
     sender: baileysMessage?.key?.remoteJid,
     sentMessage: extendedTextMessage,
@@ -57,7 +70,8 @@ function extractDataFromMessage(baileysMessage) {
     nickName: baileysMessage?.pushName,
     remoteJid: baileysMessage?.key?.remoteJid,
     isGroup: baileysMessage?.key?.remoteJid?.endsWith("@g.us"),
-    GroupParticipant: baileysMessage?.key?.participant || baileysMessage?.participants,
+    GroupParticipant:
+      baileysMessage?.key?.participant || baileysMessage?.participants,
     owner:
       baileysMessage?.key?.remoteJid?.startsWith(`${NUMBER_OWNER}`) ||
       baileysMessage?.key?.participant?.startsWith(`${NUMBER_OWNER}`),
@@ -66,7 +80,9 @@ function extractDataFromMessage(baileysMessage) {
       baileysMessage?.key?.participant?.startsWith(`${NUMBER_HOST}`),
     idMessage: baileysMessage?.key?.id,
     fullMessage,
-    numberBot: `${NUMBER_BOT}@s.whatsapp.net`,
+    numberBot:
+      baileysMessage?.key?.remoteJid.startsWith(`${NUMBER_BOT}`) ||
+      baileysMessage?.key?.participant?.startsWith(`${NUMBER_BOT}`),
     command: command.replace(PREFIX, "").trim(),
     args: arg.trim(),
     isImage,
