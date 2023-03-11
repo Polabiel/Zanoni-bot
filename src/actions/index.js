@@ -64,6 +64,7 @@ class Action {
 
     const {
       remoteJid,
+      fullMessage,
       args,
       isImage,
       isVideo,
@@ -86,6 +87,7 @@ class Action {
     } = extractDataFromMessage(baileysMessage);
 
     this.textMessage = textMessage;
+    this.fullMessage = fullMessage;
     this.extendedTextMessage = entendedTextMessage;
     this.sentMessage = sentMessage;
     this.isprivate = isprivate;
@@ -122,18 +124,12 @@ class Action {
         text: errorMessage("Você precisa escrever sua ideia na frente 🤓"),
       });
       return;
-    } else if (this.isGroup) {
-      await this.bot.sendMessage(this.remoteJid, this.checkWarning);
-      await this.bot.sendMessage(this.remoteJid, {
-        text: errorMessage("Esse comando não funciona em grupo"),
-      });
-      return;
     }
     await this.bot.sendMessage(this.remoteJid, {
-      text: `${BOT_EMOJI} Talvez eu envie pro Pola, ou não 😈`,
+      text: `${BOT_EMOJI} Talvez eu envie pro meu criador essa ideia!`,
     });
     await this.bot.sendMessage(this.owner, {
-      text: `${BOT_EMOJI} ${this.nickName} mandou essa ideia\n\n_${this.sentMessage}${this.sentText}_`,
+      text: `${BOT_EMOJI} ${this.nickName} mandou essa ideia\n\n_${this.args}_`,
     });
     await this.bot.sendMessage(this.remoteJid, this.checkGreen);
   }
@@ -485,7 +481,9 @@ Envie um vídeo menor!`),
         };
       });
       const message = {
-        text: `${BOT_EMOJI} ${this.args}\n\n${mentions.map((m) => m.tag + m.userId).join(" ")}`,
+        text: `${BOT_EMOJI} ${this.args}\n\n${mentions
+          .map((m) => m.tag + m.userId)
+          .join(" ")}`,
         mentions: mentions.map((m) => `${m.userId}@s.whatsapp.net`),
       };
       await this.bot.sendMessage(this.remoteJid, message);
@@ -594,12 +592,17 @@ Envie um vídeo menor!`),
   }
 
   async simsimi() {
-    if ((this.textMessage || this.extendedTextMessage) && !this.fromMe) {
+    await this.bot.sendMessage(this.remoteJid, this.checkPro);
+    if (!this.args) {
+      await this.bot.sendMessage(this.remoteJid, this.checkRed);
+      return await this.bot.sendMessage(this.remoteJid, {
+        text: `${warningMessage("Você precisa enviar alguma mensagem")}`,
+      });
+    } else if (!this.fromMe) {
       const message = `${this.args}`;
       const simsimiUrl = `https://api.simsimi.net/v2/?text=${encodeURIComponent(
         message
       )}&lc=pt&cf=false`;
-
       try {
         const response = await axios.get(simsimiUrl);
         const simsimiResponse = response.data;
@@ -615,7 +618,9 @@ Envie um vídeo menor!`),
           quotedMessage: this.baileysMessage.message,
         };
         await this.bot.sendMessage(this.remoteJid, messageObject);
+        await this.bot.sendMessage(this.remoteJid, this.checkNerd);
       } catch (error) {
+        await this.bot.sendMessage(this.remoteJid, this.checkRed);
         console.error("Erro ao enviar mensagem para API do SimSimi: ", error);
       }
     }

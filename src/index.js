@@ -2,8 +2,8 @@
 const connect = require("./connection");
 const middlewares = require("./middlewares");
 const { BOT_NAME, BOT_EMOJI } = require("./config");
-const botBaileys = './assets/auth/baileys';
-const botBaileysDev = './assets/auth/baileysdev';
+const botBaileys = "./assets/auth/baileys";
+const botBaileysDev = "./assets/auth/baileysdev";
 
 // Variaveis de SquareCloud
 const fs = require("fs");

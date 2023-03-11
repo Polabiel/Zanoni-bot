@@ -13,7 +13,7 @@ async function middlewares(bot) {
     if (!baileysMessage?.message || !isCommand(baileysMessage)) {
       return;
     }
-    
+
     const userCommandCount = {};
     action.blockUser(userCommandCount);
 

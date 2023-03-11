@@ -13,7 +13,7 @@ function doneMessage(message) {
 }
 
 function adminMessage(message) {
-  return `🤡 ${message} 🤡`  
+  return `🤡 ${message} 🤡`;
 }
 
 function menuMessage() {
@@ -40,25 +40,28 @@ function menuMessage() {
 ▢ • ${PREFIX}fato - Fatos que o ${BOT_NAME} sabe
 ▢ • ${PREFIX}sayall - Envie mensagem para os usuario do bot (apenas dono)
 ▢ • ${PREFIX}doe - Doe apenas 1 real para o ${BOT_NAME} (necessario 5 reais)
+▢ • ${PREFIX}bot - converse com o ${BOT_NAME} escrevendo o que você quiser
 ▢
 ╰━━─「🚀」─━━`;
 }
 
 function adminMenu() {
-  return `╭━━⪩ BEM VINDO! ⪨━━
+  return `╭━━⪩ TA FELIZ?! ⪨━━
   ▢
   ▢ • Bot em Desenvolvimento ${BOT_NAME} ${BOT_EMOJI}
   ▢ • Data: ${date.toLocaleDateString("pt-br")}
   ▢ • Hora: ${date.toLocaleTimeString("pt-br")}
   ▢ • Prefixo: ${PREFIX}
   ▢
-  ╰━━─「🪐」─━━
+  ╰━━─「😎」─━━
   
   ╭━━⪩ MENU ADMINISTRADOR ⪨━━
   ▢
   ▢ • ${PREFIX}sayall - Envie mensagem para os usuario do bot (apenas host)
   ▢ • ${PREFIX}all - Marca todos os usuarios que estão no grupo (apenas host)
-  ▢ • ${PREFIX}log - Usar log de cada função (bot, baileys, grupo) (apenas host)`
+  ▢ • ${PREFIX}log - Usar log de cada função (bot, baileys, grupo) (apenas host)
+  ▢
+  ╰━━─「😈」─━━`;
 }
 
 function donationMessage() {

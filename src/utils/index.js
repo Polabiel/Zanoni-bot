@@ -17,7 +17,11 @@ function extractDataFromMessage(baileysMessage) {
   const audioMessage = baileysMessage.message?.audioMessage?.caption;
 
   const fullMessage =
-    textMessage || extendedTextMessage || imageTextMessage || videoTextMessage || audioMessage;
+    textMessage ||
+    extendedTextMessage ||
+    imageTextMessage ||
+    videoTextMessage ||
+    audioMessage;
 
   if (!fullMessage) {
     return {
@@ -74,15 +78,16 @@ function extractDataFromMessage(baileysMessage) {
       baileysMessage?.key?.participant || baileysMessage?.participants,
     owner:
       baileysMessage?.key?.remoteJid?.startsWith(`${NUMBER_OWNER}`) ||
-      baileysMessage?.key?.participant?.startsWith(`${NUMBER_OWNER}`),
+      baileysMessage?.key?.participant?.startsWith(`${NUMBER_OWNER}`) ? `${NUMBER_OWNER}@s.whatsapp.net` : false,
     host:
       baileysMessage?.key?.remoteJid?.startsWith(`${NUMBER_HOST}`) ||
-      baileysMessage?.key?.participant?.startsWith(`${NUMBER_HOST}`),
+      baileysMessage?.key?.participant?.startsWith(`${NUMBER_HOST}`) ? `${NUMBER_OWNER}@s.whatsapp.net` : false,
     idMessage: baileysMessage?.key?.id,
     fullMessage,
     numberBot:
       baileysMessage?.key?.remoteJid.startsWith(`${NUMBER_BOT}`) ||
-      baileysMessage?.key?.participant?.startsWith(`${NUMBER_BOT}`),
+      baileysMessage?.key?.participant?.startsWith(`${NUMBER_BOT}`)
+      ? `${NUMBER_BOT}@s.whatsapp.net` : false,
     command: command.replace(PREFIX, "").trim(),
     args: arg.trim(),
     isImage,
