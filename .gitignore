@@ -129,8 +129,9 @@ dist
 .pnp.*
 
 # Configuração das API
+
 settings/
 
-# Configuração da autenticação com Whatsapp
+# Configuração da autenticação com Whatsapp e contacts.json
 
-/assets/auth/baileys
+/assets/auth/

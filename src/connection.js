@@ -3,18 +3,16 @@ const {
   DisconnectReason,
   useMultiFileAuthState,
 } = require("@adiwajshing/baileys");
-const p = require('pino')
+const p = require("pino");
 
-async function connect() {
-  const { state, saveCreds } = await useMultiFileAuthState(
-    "./assets/auth/baileys"
-  );
+async function connect(authFolderPath) {
+  const { state, saveCreds } = await useMultiFileAuthState(authFolderPath);
 
   const bot = makeWASocket({
     printQRInTerminal: true,
     auth: state,
     defaultQueryTimeoutMs: undefined,
-    logger: p({ level: 'silent' })
+    logger: p({ level: "silent" }),
   });
 
   bot.ev.on("connection.update", (update) => {
@@ -25,7 +23,7 @@ async function connect() {
         lastDisconnect.error?.output?.statusCode !== DisconnectReason.loggedOut;
 
       if (shouldReconnect) {
-        connect();
+        connect(authFolderPath);
       }
     }
   });
