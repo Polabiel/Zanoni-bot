@@ -134,4 +134,5 @@ settings/
 
 # Configuração da autenticação com Whatsapp e contacts.json
 
-/assets/auth/
+/assets/auth/baileys
+/assets/auth/baileysdev
