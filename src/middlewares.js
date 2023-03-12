@@ -1,7 +1,9 @@
-const { isCommand, extractDataFromMessage } = require("./utils");
+const { isCommand, extractDataFromMessage, remoteJid } = require("./utils");
 const Action = require("./actions");
 
 async function middlewares(bot) {
+  let lastCommandTime = 0;
+
   bot.ev.on("messages.upsert", async ({ messages }) => {
     const baileysMessage = messages[0];
     const action = new Action(bot, baileysMessage);
@@ -14,10 +16,14 @@ async function middlewares(bot) {
       return;
     }
 
-    const userCommandCount = {};
-    action.blockUser(userCommandCount);
+    const { command } = extractDataFromMessage(baileysMessage, bot);
 
-    const { command } = extractDataFromMessage(baileysMessage);
+    const currentTime = new Date().getTime();
+    const timeDiff = currentTime - lastCommandTime;
+    if (timeDiff < 5000) {
+      await new Promise((resolve) => setTimeout(resolve, 5000 - timeDiff));
+    }
+    lastCommandTime = new Date().getTime();
 
     switch (command.toLowerCase()) {
       case "ideia":
@@ -59,14 +65,10 @@ async function middlewares(bot) {
         action.server();
         break;
       case "doa":
-      case "doação":
-      case "doe":
-        action.doa();
-        break;
       case "doe":
       case "doar":
       case "doação":
-        action.doe();
+        action.doa();
         break;
       case "sayall":
       case "say":
@@ -83,6 +85,10 @@ async function middlewares(bot) {
       case "simsimi":
       case "simi":
         action.simsimi();
+        break;
+      case "menustaff":
+      case "staff":
+        action.menuStaff();
         break;
       default:
         action.default();

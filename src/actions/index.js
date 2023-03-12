@@ -3,6 +3,7 @@ const {
   TEMP_FOLDER,
   CONTACTS_PATH,
   BOT_NAME,
+  PREFIX,
 } = require("../config");
 const { consultarCep } = require("correios-brasil");
 const {
@@ -70,34 +71,29 @@ class Action {
       isVideo,
       isSticker,
       owner,
-      GroupParticipant,
       nickName,
       isGroup,
-      sentMessage,
-      sentText,
       numberBot,
       host,
-      keyMessage,
       command,
-      userId,
       fromMe,
       isprivate,
       textMessage,
       entendedTextMessage,
+      idMessage,
+      participant,
     } = extractDataFromMessage(baileysMessage);
 
     this.textMessage = textMessage;
     this.fullMessage = fullMessage;
     this.extendedTextMessage = entendedTextMessage;
-    this.sentMessage = sentMessage;
     this.isprivate = isprivate;
     this.fromMe = fromMe;
-    this.userId = userId;
     this.command = command;
     this.numberBot = numberBot;
     this.isGroup = isGroup;
     this.checkNerd = checkNerd;
-    this.GroupParticipant = GroupParticipant;
+    this.participant = participant;
     this.nickName = nickName;
     this.owner = owner;
     this.checkWarning = checkWarning;
@@ -112,8 +108,7 @@ class Action {
     this.isVideo = isVideo;
     this.isSticker = isSticker;
     this.baileysMessage = baileysMessage;
-    this.sentText = sentText;
-    this.idMessage = keyMessage;
+    this.idMessage = idMessage;
   }
 
   async ideia() {
@@ -121,15 +116,17 @@ class Action {
     if (!this.args) {
       await this.bot.sendMessage(this.remoteJid, this.checkNerd);
       await this.bot.sendMessage(this.remoteJid, {
-        text: errorMessage("Você precisa escrever sua ideia na frente 🤓"),
+        text: warningMessage(
+          "Você precisa escrever sua ideia de comando na frente 🤓"
+        ),
       });
       return;
     }
     await this.bot.sendMessage(this.remoteJid, {
-      text: `${BOT_EMOJI} Talvez eu envie pro meu criador essa ideia!`,
+      text: `${BOT_EMOJI} Mensagem enviada com sucesso!`,
     });
     await this.bot.sendMessage(this.owner, {
-      text: `${BOT_EMOJI} ${this.nickName} mandou essa ideia\n\n_${this.args}_`,
+      text: `${BOT_EMOJI} ${this.nickName} Enviou essa ideia\n\n_${this.args}_`,
     });
     await this.bot.sendMessage(this.remoteJid, this.checkGreen);
   }
@@ -222,54 +219,13 @@ Erro: ${error.message}`),
           }
         );
       } else {
-        const inputPath = await downloadVideo(this.baileysMessage, "input");
-
-        const sizeInSeconds = 10;
-
-        const seconds =
-          this.baileysMessage.message?.videoMessage?.seconds ||
-          this.baileysMessage.message?.extendedTextMessage?.contextInfo
-            ?.quotedMessage?.videoMessage?.seconds;
-
-        const haveSecondsRule = seconds <= sizeInSeconds;
-
-        if (!haveSecondsRule) {
-          fs.unlinkSync(inputPath);
-
-          await this.bot.sendMessage(this.remoteJid, this.checkWarning);
-          await this.bot.sendMessage(this.remoteJid, {
-            text: errorMessage(`O vídeo que você enviou tem mais de ${sizeInSeconds} segundos!
-Envie um vídeo menor!`),
-          });
-
-          return;
-        }
-
-        exec(
-          `ffmpeg -i ${inputPath} -y -vcodec libwebp -fs 0.99M -filter_complex "[0:v] scale=512:512,fps=12,pad=512:512:-1:-1:color=white@0.0,split[a][b];[a]palettegen=reserve_transparent=on:transparency_color=ffffff[p];[b][p]paletteuse" -f webp ${outputPath}`,
-          async (error) => {
-            if (error) {
-              fs.unlinkSync(inputPath);
-
-              await this.bot.sendMessage(this.remoteJid, this.checkRed);
-              await this.bot.sendMessage(this.remoteJid, {
-                text: errorMessage(
-                  "Não foi possível converter o vídeo/gif em figurinha!"
-                ),
-              });
-
-              return;
-            }
-
-            await this.bot.sendMessage(this.remoteJid, this.checkGreen);
-            await this.bot.sendMessage(this.remoteJid, {
-              sticker: { url: outputPath },
-            });
-
-            fs.unlinkSync(inputPath);
-            fs.unlinkSync(outputPath);
-          }
-        );
+        // isVideo
+        await this.bot.sendMessage(this.remoteJid, this.checkWarning);
+        return await this.bot.sendMessage(this.remoteJid, {
+          text: warningMessage(
+            "Não é possível converter vídeos em figurinhas!"
+          ),
+        });
       }
     } catch (error) {
       await this.bot.sendMessage(this.remoteJid, {
@@ -510,6 +466,7 @@ Envie um vídeo menor!`),
           await this.bot.sendMessage(this.remoteJid, {
             text: BailesyslogMessage,
           });
+          await this.bot.sendMessage(this.remoteJid, this.checkGreen);
         } catch (error) {
           await this.bot.sendMessage(this.remoteJid, {
             text: `${errorMessage(`Ocorreu um erro: ${error}`)}`,
@@ -521,6 +478,7 @@ Envie um vídeo menor!`),
         const botLogMessage = JSON.stringify(this.bot, null, 4);
         try {
           await this.bot.sendMessage(this.remoteJid, { text: botLogMessage });
+          await this.bot.sendMessage(this.remoteJid, this.checkGreen);
         } catch (error) {
           await this.bot.sendMessage(this.remoteJid, {
             text: `${errorMessage(`Ocorreu um erro: ${error}`)}`,
@@ -536,6 +494,7 @@ Envie um vídeo menor!`),
         );
         try {
           await this.bot.sendMessage(this.remoteJid, { text: group });
+          await this.bot.sendMessage(this.remoteJid, this.checkGreen);
         } catch (error) {
           await this.bot.sendMessage(this.remoteJid, {
             text: `${errorMessage(`Ocorreu um erro: ${error}`)}`,
@@ -547,6 +506,7 @@ Envie um vídeo menor!`),
         const fullLogMessage = JSON.stringify(this.fullMessage, null, 4);
         try {
           await this.bot.sendMessage(this.remoteJid, { text: fullLogMessage });
+          await this.bot.sendMessage(this.remoteJid, this.checkGreen);
         } catch (error) {
           await this.bot.sendMessage(this.remoteJid, {
             text: `${errorMessage(`Ocorreu um erro: ${error}`)}`,
@@ -555,50 +515,17 @@ Envie um vídeo menor!`),
         }
         break;
       default:
+        const conteudo = ["full", "baileys", "bot", "grupo"];
+        const getContent =
+          conteudo[Math.floor(Math.random() * conteudo.length)];
+        await this.bot.sendMessage(this.remoteJid, this.checkWarning);
         await this.bot.sendMessage(this.remoteJid, {
-          text: "Comando inválido",
+          text: `${warningMessage("Você precisa enviar um argumento")}`,
+        });
+        await this.bot.sendMessage(this.remoteJid, {
+          text: `${warningMessage(`Exemplo: ${PREFIX}log ${getContent}`)}`,
         });
         break;
-    }
-    await this.bot.sendMessage(this.remoteJid, this.checkGreen);
-  }
-
-  async blockUser(userCommandCount) {
-    const userId = this.userId;
-
-    // Extrai o comando da mensagem
-    const command = this.command;
-
-    // Define o número máximo de vezes que o usuário pode usar o comando
-    const maxCount = 3;
-
-    // Se o usuário ainda não tiver usado nenhum comando, inicializa a contagem
-    if (!userCommandCount[userId]) {
-      userCommandCount[userId] = {};
-    }
-
-    // Se o usuário já tiver usado o comando, incrementa a contagem
-    if (userCommandCount[userId][command]) {
-      userCommandCount[userId][command]++;
-    } else {
-      userCommandCount[userId][command] = 1;
-    }
-
-    // Se o usuário exceder o número máximo de comandos, bloqueia ou remove do grupo
-    if (userCommandCount[userId][command] > maxCount) {
-      const groupId = this.remoteJid;
-      const response = await this.bot.groupParticipantsUpdate(
-        groupId,
-        [userId],
-        "remove"
-      );
-      if (response.status === 200) {
-        console.log(`Usuário ${userId} removido do grupo ${groupId}.`);
-      } else {
-        console.error(
-          `Erro ao remover usuário ${userId} do grupo ${groupId}. Código: ${response.status}.`
-        );
-      }
     }
   }
 
@@ -636,5 +563,17 @@ Envie um vídeo menor!`),
       }
     }
   }
+
+  async menuStaff() {
+    await this.bot.sendMessage(this.remoteJid, this.checkPro);
+    if (!this.owner || !this.host) {
+      await this.bot.sendMessage(this.remoteJid, this.checkRed);
+      return await this.bot.sendMessage(this.remoteJid, {
+        text: adminMessage("Você não é dono do bot/host"),
+      });
+    } await this.bot.sendMessage(this.remoteJid, {text: `${adminMessage()}`});
+      await this.bot.sendMessage(this.remoteJid, this.checkGreen);
+  }
 }
+
 module.exports = Action;

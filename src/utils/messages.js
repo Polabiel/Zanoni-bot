@@ -32,13 +32,12 @@ function menuMessage() {
 ▢
 ▢ • ${PREFIX}cep - Consulte o endereço pelo CEP
 ▢ • ${PREFIX}ping -  Vejá o que acontece
-▢ • ${PREFIX}sticker - Faça uma img se tornar um sticker (ainda não funciona com vídeos ou gif)
+▢ • ${PREFIX}sticker - Faça uma img se tornar um sticker (não funciona animado)
 ▢ • ${PREFIX}toimg - Faça um sticker se tornar uma img 
 ▢ • ${PREFIX}ideia - Envia uma ideia de comando
 ▢ • ${PREFIX}jao - ${"nunca use esse comando".toUpperCase}
 ▢ • ${PREFIX}server - Entre no nosso server do discord
 ▢ • ${PREFIX}fato - Fatos que o ${BOT_NAME} sabe
-▢ • ${PREFIX}sayall - Envie mensagem para os usuario do bot (apenas dono)
 ▢ • ${PREFIX}doe - Doe apenas 1 real para o ${BOT_NAME} (necessario 5 reais)
 ▢ • ${PREFIX}bot - converse com o ${BOT_NAME} escrevendo o que você quiser
 ▢

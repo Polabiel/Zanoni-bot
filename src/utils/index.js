@@ -23,19 +23,17 @@ function extractDataFromMessage(baileysMessage) {
     videoTextMessage ||
     audioMessage;
 
+
   if (!fullMessage) {
     return {
       entendedTextMessage: "",
       textMessage: "",
       sender: "",
-      keyMessage: "",
-      sentMessage: "",
-      sentText: "",
       isGroup: "",
       owner: "",
       nickName: "",
       idMessage: "",
-      GroupParticipant: "",
+      participant: "",
       remoteJid: "",
       host: "",
       fullMessage: "",
@@ -59,22 +57,15 @@ function extractDataFromMessage(baileysMessage) {
   const arg = args.reduce((acc, arg) => acc + " " + arg, "").trim();
 
   return {
-    entendedTextMessage: baileysMessage.message?.extendedTextMessage?.text,
-    textMessage: baileysMessage.message?.conversation,
+    entendedTextMessage: extendedTextMessage,
+    textMessage: textMessage,
     isprivate: baileysMessage?.key?.remoteJid?.includes("@s.whatsapp.net"),
     fromMe: baileysMessage?.key?.fromMe,
-    userId:
-      baileysMessage?.key?.participant ||
-      baileysMessage?.participants ||
-      baileysMessage?.key?.remoteJid,
-    keyMessage: baileysMessage?.key?.id,
     sender: baileysMessage?.key?.remoteJid,
-    sentMessage: extendedTextMessage,
-    sentText: textMessage,
     nickName: baileysMessage?.pushName,
     remoteJid: baileysMessage?.key?.remoteJid,
     isGroup: baileysMessage?.key?.remoteJid?.endsWith("@g.us"),
-    GroupParticipant:
+    participant:
       baileysMessage?.key?.participant || baileysMessage?.participants,
     owner:
       baileysMessage?.key?.remoteJid?.startsWith(`${NUMBER_OWNER}`) ||
