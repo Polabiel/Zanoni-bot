@@ -375,7 +375,7 @@ Erro: ${error.message}`),
     const key = {
       remoteJid: this.remoteJid,
       id: this.idMessage,
-      participant: this.GroupParticipant,
+      participant: this.participant,
     };
 
     await this.bot.readMessages([key]);
