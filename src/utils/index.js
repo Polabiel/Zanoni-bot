@@ -1,4 +1,10 @@
-const { PREFIX, TEMP_FOLDER } = require("../config");
+const {
+  PREFIX,
+  TEMP_FOLDER,
+  NUMBER_OWNER,
+  NUMBER_BOT,
+  NUMBER_HOST,
+} = require("../config");
 const { downloadContentFromMessage } = require("@adiwajshing/baileys");
 const path = require("path");
 const { writeFile } = require("fs/promises");
@@ -8,24 +14,34 @@ function extractDataFromMessage(baileysMessage) {
   const extendedTextMessage = baileysMessage.message?.extendedTextMessage?.text;
   const imageTextMessage = baileysMessage.message?.imageMessage?.caption;
   const videoTextMessage = baileysMessage.message?.videoMessage?.caption;
+  const audioMessage = baileysMessage.message?.audioMessage?.caption;
 
   const fullMessage =
-    textMessage || extendedTextMessage || imageTextMessage || videoTextMessage ;
+    textMessage ||
+    extendedTextMessage ||
+    imageTextMessage ||
+    videoTextMessage ||
+    audioMessage;
+
 
   if (!fullMessage) {
     return {
+      entendedTextMessage: "",
+      textMessage: "",
       sender: "",
-      sentMessage: "",
-      sentText: "",
       isGroup: "",
-      peido: "",
+      owner: "",
       nickName: "",
       idMessage: "",
-      GroupParticipant: "",
+      participant: "",
       remoteJid: "",
+      host: "",
       fullMessage: "",
       command: "",
       args: "",
+      numberBot: "",
+      isprivate: "",
+      fromMe: false,
       isImage: false,
       isVideo: false,
       isSticker: false,
@@ -41,16 +57,28 @@ function extractDataFromMessage(baileysMessage) {
   const arg = args.reduce((acc, arg) => acc + " " + arg, "").trim();
 
   return {
-    sender: baileysMessage?.key?.remoteJid?.endsWith('@g.us') ? baileysMessage?.participant : baileysMessage?.key?.remoteJid,
-    sentMessage: baileysMessage?.message?.extendedTextMessage?.text,
-    sentText: baileysMessage?.message?.conversation,
-    nickName:baileysMessage?.pushName,
+    entendedTextMessage: extendedTextMessage,
+    textMessage: textMessage,
+    isprivate: baileysMessage?.key?.remoteJid?.includes("@s.whatsapp.net"),
+    fromMe: baileysMessage?.key?.fromMe,
+    sender: baileysMessage?.key?.remoteJid,
+    nickName: baileysMessage?.pushName,
     remoteJid: baileysMessage?.key?.remoteJid,
-    isGroup: baileysMessage?.key?.remoteJid?.endsWith('@g.us'),
-    GroupParticipant: baileysMessage?.key?.participant,
-    peido: '5519981022857@s.whatsapp.net',
+    isGroup: baileysMessage?.key?.remoteJid?.endsWith("@g.us"),
+    participant:
+      baileysMessage?.key?.participant || baileysMessage?.participants,
+    owner:
+      baileysMessage?.key?.remoteJid?.startsWith(`${NUMBER_OWNER}`) ||
+      baileysMessage?.key?.participant?.startsWith(`${NUMBER_OWNER}`) ? `${NUMBER_OWNER}@s.whatsapp.net` : false,
+    host:
+      baileysMessage?.key?.remoteJid?.startsWith(`${NUMBER_HOST}`) ||
+      baileysMessage?.key?.participant?.startsWith(`${NUMBER_HOST}`) ? `${NUMBER_OWNER}@s.whatsapp.net` : false,
     idMessage: baileysMessage?.key?.id,
     fullMessage,
+    numberBot:
+      baileysMessage?.key?.remoteJid.startsWith(`${NUMBER_BOT}`) ||
+      baileysMessage?.key?.participant?.startsWith(`${NUMBER_BOT}`)
+      ? `${NUMBER_BOT}@s.whatsapp.net` : false,
     command: command.replace(PREFIX, "").trim(),
     args: arg.trim(),
     isImage,
@@ -63,7 +91,7 @@ function is(baileysMessage, context) {
   return (
     !!baileysMessage.message?.[`${context}Message`] ||
     !!baileysMessage.message?.extendedTextMessage?.contextInfo?.quotedMessage?.[
-    `${context}Message`
+      `${context}Message`
     ]
   );
 }
@@ -72,7 +100,7 @@ function getContent(baileysMessage, type) {
   return (
     baileysMessage.message?.[`${type}Message`] ||
     baileysMessage.message?.extendedTextMessage?.contextInfo?.quotedMessage?.[
-    `${type}Message`
+      `${type}Message`
     ]
   );
 }

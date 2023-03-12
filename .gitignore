@@ -128,4 +128,11 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
+# Configuração das API
+
 settings/
+
+# Configuração da autenticação com Whatsapp e contacts.json
+
+/assets/auth/baileys
+/assets/auth/baileysdev

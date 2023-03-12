@@ -1,17 +1,29 @@
-const { isCommand, extractDataFromMessage } = require("./utils");
+const { isCommand, extractDataFromMessage, remoteJid } = require("./utils");
 const Action = require("./actions");
 
 async function middlewares(bot) {
+  let lastCommandTime = 0;
+
   bot.ev.on("messages.upsert", async ({ messages }) => {
     const baileysMessage = messages[0];
+    const action = new Action(bot, baileysMessage);
+
+    action.presenceAvailable();
+    action.readMessage();
+    action.createContacts();
 
     if (!baileysMessage?.message || !isCommand(baileysMessage)) {
       return;
     }
 
-    const action = new Action(bot, baileysMessage);
+    const { command } = extractDataFromMessage(baileysMessage, bot);
 
-    const { command, remoteJid} = extractDataFromMessage(baileysMessage);
+    const currentTime = new Date().getTime();
+    const timeDiff = currentTime - lastCommandTime;
+    if (timeDiff < 5000) {
+      await new Promise((resolve) => setTimeout(resolve, 5000 - timeDiff));
+    }
+    lastCommandTime = new Date().getTime();
 
     switch (command.toLowerCase()) {
       case "ideia":
@@ -30,7 +42,7 @@ async function middlewares(bot) {
         await action.menu();
         break;
       case "ping":
-        await action.ping()
+        await action.ping();
         break;
       case "toimage":
       case "toimg":
@@ -42,18 +54,44 @@ async function middlewares(bot) {
       case "jão":
         await action.jao();
         break;
-        case 'fato':
-        case 'fatos':
-          action.fatos()
-          break;
+      case "fato":
+      case "fatos":
+        action.fatos();
+        break;
       case "server":
       case "pola":
       case "discord":
       case "haze":
-        action.server()
+        action.server();
+        break;
+      case "doa":
+      case "doe":
+      case "doar":
+      case "doação":
+        action.doa();
+        break;
+      case "sayall":
+      case "say":
+        action.sayAll();
+        break;
+      case "marca":
+      case "all":
+        action.markAll();
+        break;
+      case "log":
+        action.log();
+        break;
+      case "bot":
+      case "simsimi":
+      case "simi":
+        action.simsimi();
+        break;
+      case "menustaff":
+      case "staff":
+        action.menuStaff();
         break;
       default:
-        action.default()
+        action.default();
         break;
     }
   });

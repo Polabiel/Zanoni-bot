@@ -1,9 +1,0 @@
-
-tasks:
-  - init: npm install
-    command: "echo \"Não vou executar nada, até você digitar npm start\" && exit 1"
-
-vscode:
-  extensions:
-    - PKief.material-icon-theme
-    - vscode.theme-defaults
