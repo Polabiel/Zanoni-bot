@@ -553,7 +553,7 @@ Erro: ${error.message}`),
         const messageObject = {
           text: simsimiMessage,
           chat: this.remoteJid,
-          quotedMessage: this.baileysMessage.message,
+          quotedMessage: this.baileysMessage?.message,
         };
         await this.bot.sendMessage(this.remoteJid, messageObject);
         await this.bot.sendMessage(this.remoteJid, this.checkNerd);
